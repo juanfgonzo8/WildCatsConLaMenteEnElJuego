@@ -59,19 +59,31 @@ histSatNoche1 = np.histogram(imNoche1[:,:,1],bins=100)
 histSatNoche2 = np.histogram(imNoche2[:,:,1],bins=100)
 histSatNoche3 = np.histogram(imNoche3[:,:,1],bins=100)
 
-histDia1 = np.concatenate((histHueDia1[0],histSatDia1[0]),1)
-histDia2 = np.concatenate((histHueDia2[0],histSatDia2[0]),1)
-histDia3 = np.concatenate((histHueDia3[0],histSatDia3[0]),1)
+histDia1 = np.concatenate((histHueDia1[0],histSatDia1[0]),0)
+histDia2 = np.concatenate((histHueDia2[0],histSatDia2[0]),0)
+histDia3 = np.concatenate((histHueDia3[0],histSatDia3[0]),0)
 
-histNoche1 = np.concatenate((histHueNoche1[0],histSatNoche1[0]),1)
-histNoche2 = np.concatenate((histHueNoche2[0],histSatNoche2[0]),1)
-histNoche3 = np.concatenate((histHueNoche3[0],histSatNoche3[0]),1)
+histNoche1 = np.concatenate((histHueNoche1[0],histSatNoche1[0]),0)
+histNoche2 = np.concatenate((histHueNoche2[0],histSatNoche2[0]),0)
+histNoche3 = np.concatenate((histHueNoche3[0],histSatNoche3[0]),0)
 
 #Se entrena un SVM. Dia = 0, Noche = 1.
 x = [histDia1,histDia2,histDia3,histNoche1,histNoche2,histNoche3]
 y = [0,0,0,1,1,1]
 clf = svm.SVC()
 clf.fit(x,y)
+
+##
+#Se prueba una imagen
+path_prueba = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0b0240-23d2-11e8-a6a3-ec086b02610b.jpg'
+imPrueba = cv2.imread(path_prueba)
+imPrueba = cv2.cvtColor(imPrueba,cv2.COLOR_BGR2HSV)
+
+histHuePrueba = np.histogram(imPrueba[:,:,0],bins=100)
+histSatPrueba = np.histogram(imPrueba[:,:,1],bins=100)
+histPrueba = np.concatenate((histHuePrueba[0],histSatPrueba[0]),0)
+
+pred = clf.predict([histPrueba])
 
 #Se grafican los histogramas
 # plt.figure()
