@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
 
 # Funcion para CLAHE
 # Recibe BGR y saca BGR
@@ -37,3 +38,21 @@ def miWB_LB(im):
     WBed = elWB.balanceWhite(im)
     WBed = cv2.cvtColor(WBed, cv2.COLOR_BGR2RGB)
     return WBed
+
+path_nombre = 'Aqui va su path'
+
+plt.figure()
+plt.imshow(miCLAHE(cv2.imread(path_nombre)))
+plt.title('CLAHE')
+
+plt.figure()
+plt.imshow(miWBsimple(cv2.imread(path_nombre)))
+plt.title('WB Simple')
+
+plt.figure()
+plt.imshow(miWBgrayworld(cv2.imread(path_nombre)))
+plt.title('WB Grayworld')
+
+plt.figure()
+plt.imshow(miWB_LB(cv2.imread(path_nombre)))
+plt.title('WB LB')
