@@ -1,2 +1,6 @@
 .idea/
 venv/
+.DS_Store
+__pycache__/
+inception-v4_weights_tf_dim_ordering_tf_kernels.h5
+inception-v4_weights_tf_dim_ordering_tf_kernels_notop.h5

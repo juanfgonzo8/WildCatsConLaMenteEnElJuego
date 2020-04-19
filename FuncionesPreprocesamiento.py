@@ -5,14 +5,16 @@ from matplotlib import pyplot as plt
 # Funcion para CLAHE
 # Recibe BGR y saca BGR
 
-def miCLAHE(im,elClahe):
+def miCLAHE(im):
+    elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
 
     labs = cv2.cvtColor(im, cv2.COLOR_BGR2Lab)
     labs[0] = elClahe.apply(labs[0])
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
     clahed = cv2.cvtColor(clahed, cv2.COLOR_BGR2RGB)
     return clahed
-def imclahe(img,clahe):
+def imclahe(img):
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     lab_planes = cv2.split(lab)
     lab_planes[0] = clahe.apply(lab_planes[0])
@@ -46,22 +48,22 @@ def miWB_LB(im):
     WBed = cv2.cvtColor(WBed, cv2.COLOR_BGR2RGB)
     return WBed
 
-path_nombre = 'D:/VISION/iwildcam-2019-fgvc6-NUEVO/train_images/5a0affc7-23d2-11e8-a6a3-ec086b02610b.jpg'
-elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))  # puede probarse (8,8)
-plt.figure()
-plt.imshow(miCLAHE(cv2.imread(path_nombre),elClahe))
-plt.title('CLAHE')
-plt.figure()
-plt.imshow(imclahe(cv2.imread(path_nombre),elClahe))
-plt.title('CLAHE2')
-plt.figure()
-plt.imshow(miWBsimple(cv2.imread(path_nombre)))
-plt.title('WB Simple')
-
-plt.figure()
-plt.imshow(miWBgrayworld(cv2.imread(path_nombre)))
-plt.title('WB Grayworld')
-
-plt.figure()
-plt.imshow(miWB_LB(cv2.imread(path_nombre)))
-plt.title('WB LB')
+# path_nombre = 'D:/VISION/iwildcam-2019-fgvc6-NUEVO/train_images/5a0affc7-23d2-11e8-a6a3-ec086b02610b.jpg'
+# elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))  # puede probarse (8,8)
+# plt.figure()
+# plt.imshow(miCLAHE(cv2.imread(path_nombre),elClahe))
+# plt.title('CLAHE')
+# plt.figure()
+# plt.imshow(imclahe(cv2.imread(path_nombre),elClahe))
+# plt.title('CLAHE2')
+# plt.figure()
+# plt.imshow(miWBsimple(cv2.imread(path_nombre)))
+# plt.title('WB Simple')
+#
+# plt.figure()
+# plt.imshow(miWBgrayworld(cv2.imread(path_nombre)))
+# plt.title('WB Grayworld')
+#
+# plt.figure()
+# plt.imshow(miWB_LB(cv2.imread(path_nombre)))
+# plt.title('WB LB')
