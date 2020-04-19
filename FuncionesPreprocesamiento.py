@@ -4,14 +4,21 @@ from matplotlib import pyplot as plt
 
 # Funcion para CLAHE
 # Recibe BGR y saca BGR
-def miCLAHE(im):
-    elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16,16)) #puede probarse (8,8)
+
+def miCLAHE(im,elClahe):
+
     labs = cv2.cvtColor(im, cv2.COLOR_BGR2Lab)
     labs[0] = elClahe.apply(labs[0])
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
     clahed = cv2.cvtColor(clahed, cv2.COLOR_BGR2RGB)
     return clahed
-
+def imclahe(img,clahe):
+    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+    lab_planes = cv2.split(lab)
+    lab_planes[0] = clahe.apply(lab_planes[0])
+    lab = cv2.merge(lab_planes)
+    bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+    return bgr
 #Funcion para Simple white balance
 # Recibe BGR y saca BGR
 def miWBsimple(im):
@@ -39,12 +46,14 @@ def miWB_LB(im):
     WBed = cv2.cvtColor(WBed, cv2.COLOR_BGR2RGB)
     return WBed
 
-path_nombre = 'Aqui va su path'
-
+path_nombre = 'D:/VISION/iwildcam-2019-fgvc6-NUEVO/train_images/5a0affc7-23d2-11e8-a6a3-ec086b02610b.jpg'
+elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))  # puede probarse (8,8)
 plt.figure()
-plt.imshow(miCLAHE(cv2.imread(path_nombre)))
+plt.imshow(miCLAHE(cv2.imread(path_nombre),elClahe))
 plt.title('CLAHE')
-
+plt.figure()
+plt.imshow(imclahe(cv2.imread(path_nombre),elClahe))
+plt.title('CLAHE2')
 plt.figure()
 plt.imshow(miWBsimple(cv2.imread(path_nombre)))
 plt.title('WB Simple')
