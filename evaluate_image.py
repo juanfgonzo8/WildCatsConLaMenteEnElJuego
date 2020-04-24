@@ -89,8 +89,8 @@ if __name__ == "__main__":
 	clasDia = diaONoche()
 
 	subset = sacarPaths(
-		'/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train.csv',
-		'/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/')
+		'/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train.csv',
+		'/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/')
 
 	preds_final = np.empty([len(subset[1]),1])
 	cont = 0
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 		#subset = sacarPaths('/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train.csv',
 		#					'/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/')
 
-		path_carpet = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/'
+		path_carpet = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/'
 		path_completo = path_carpet+i
 		#Day 'N' Night
 		hora = probarDia(path_completo,clasDia)

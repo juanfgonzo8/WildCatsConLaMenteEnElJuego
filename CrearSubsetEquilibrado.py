@@ -36,4 +36,5 @@ def sacarPaths(path_csv,path_train1):
         for j in i:
              listcat.append(j)
     X_train, X_test, y_train, y_test = train_test_split(listnom, listcat, test_size = 0.3, random_state = 0)
+    X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.3, random_state=0)
     return X_train, X_test, y_train, y_test

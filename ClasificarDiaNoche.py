@@ -15,14 +15,14 @@ from sklearn import svm
 
 #Se copian los paths de las imagenes
 def diaONoche():
-    path_dia1 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0affae-23d2-11e8-a6a3-ec086b02610b.jpg'
-    path_noche1 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0affb1-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_dia1 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0affae-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_noche1 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0affb1-23d2-11e8-a6a3-ec086b02610b.jpg'
 
-    path_dia2 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0b01b5-23d2-11e8-a6a3-ec086b02610b.jpg'
-    path_noche2 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0b01b3-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_dia2 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0b01b5-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_noche2 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0b01b3-23d2-11e8-a6a3-ec086b02610b.jpg'
 
-    path_dia3 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0b02fa-23d2-11e8-a6a3-ec086b02610b.jpg'
-    path_noche3 = '/Users/johngonzalez/Desktop/Trabajos JF/Documents/U/Octavo Semestre/Vision Artificial/Proyecto/iwildcam-2019-fgvc6/train_images/5a0b02e6-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_dia3 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0b02fa-23d2-11e8-a6a3-ec086b02610b.jpg'
+    path_noche3 = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images/5a0b02e6-23d2-11e8-a6a3-ec086b02610b.jpg'
 
     #Se leen las imagenes
     imDia1 = cv2.imread(path_dia1)
