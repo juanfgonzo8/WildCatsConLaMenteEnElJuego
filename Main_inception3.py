@@ -9,6 +9,9 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+
 ##
 #Se establecen los paths
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train.csv'
