@@ -14,8 +14,8 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 ##
 #Se establecen los paths
-path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train.csv'
-path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/iwildcam-2019-fgvc6/train_images'
+path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
+path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 
 ##
 #Se crea el modelo
