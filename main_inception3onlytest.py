@@ -41,11 +41,45 @@ model = Model(inputs=base_model.input, outputs=predictions)
 for layer in base_model.layers:
     layer.trainable = False
 
-# compile the model (should be done *after* setting layers to non-trainable)
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+##
+#Metrica final
+def f1(y_true, y_pred):
+    def recall(y_true, y_pred):
+        """Recall metric.
+
+        Only computes a batch-wise average of recall.
+
+        Computes the recall, a metric for multi-label classification of
+        how many relevant items are selected.
+        """
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+        recall = true_positives / (possible_positives + K.epsilon())
+        return recall
+
+    def precision(y_true, y_pred):
+        """Precision metric.
+
+        Only computes a batch-wise average of precision.
+
+        Computes the precision, a metric for multi-label classification of
+        how many selected items are relevant.
+        """
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+        precision = true_positives / (predicted_positives + K.epsilon())
+        return precision
+    precision = precision(y_true, y_pred)
+    recall = recall(y_true, y_pred)
+    return 2*((precision*recall)/(precision+recall+K.epsilon()))
 
 ##
 #Se cargan los datos
+
+# compile the model (should be done *after* setting layers to non-trainable)
+# model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
+
 train_df = pd.read_csv(path_csv)
 train_df['category_id'] = train_df['category_id'].astype(str)
 
@@ -97,66 +131,33 @@ history = model.fit_generator(
 
 # let's visualize layer names and layer indices to see how many layers
 # we should freeze:
-for i, layer in enumerate(base_model.layers):
-   print(i, layer.name)
+# for i, layer in enumerate(base_model.layers):
+#    print(i, layer.name)
 
 # we chose to train the top 2 inception blocks, i.e. we will freeze
 # the first 249 layers and unfreeze the rest:
-for layer in model.layers[:249]:
-   layer.trainable = False
-for layer in model.layers[249:]:
-   layer.trainable = True
-
-
-##
-#Metrica final
-def f1(y_true, y_pred):
-    def recall(y_true, y_pred):
-        """Recall metric.
-
-        Only computes a batch-wise average of recall.
-
-        Computes the recall, a metric for multi-label classification of
-        how many relevant items are selected.
-        """
-        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-        possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-        recall = true_positives / (possible_positives + K.epsilon())
-        return recall
-
-    def precision(y_true, y_pred):
-        """Precision metric.
-
-        Only computes a batch-wise average of precision.
-
-        Computes the precision, a metric for multi-label classification of
-        how many selected items are relevant.
-        """
-        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-        predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
-        precision = true_positives / (predicted_positives + K.epsilon())
-        return precision
-    precision = precision(y_true, y_pred)
-    recall = recall(y_true, y_pred)
-    return 2*((precision*recall)/(precision+recall+K.epsilon()))
+# for layer in model.layers[:249]:
+#    layer.trainable = False
+# for layer in model.layers[249:]:
+#    layer.trainable = True
 
 ##
 # we need to recompile the model for these modifications to take effect
 # we use SGD with a low learning rate
-from keras.optimizers import SGD
-model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
+# from keras.optimizers import SGD
+# model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
 
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
 #model.fit(...)
 
 # Train model
-history = model.fit_generator(
-            train_generator,
-#             steps_per_epoch = train_generator.samples // batch_size,
-            steps_per_epoch = 100,
-            validation_data = validation_generator,
-#             validation_steps = validation_generator.samples // batch_size,
-            validation_steps = 50,
-            epochs = nb_epochs,
-            verbose=2)
+# history = model.fit_generator(
+#             train_generator,
+# #             steps_per_epoch = train_generator.samples // batch_size,
+#             steps_per_epoch = 100,
+#             validation_data = validation_generator,
+# #             validation_steps = validation_generator.samples // batch_size,
+#             validation_steps = 50,
+#             epochs = nb_epochs,
+#             verbose=2)
