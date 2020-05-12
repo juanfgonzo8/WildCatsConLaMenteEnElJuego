@@ -16,8 +16,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 from keras import backend as K
 import tensorflow as tf
 
-from tensorflow.python.client import device_lib
-print(device_lib.list_local_devices())
+sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 ##
 #Se establecen los paths
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
