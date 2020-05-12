@@ -13,6 +13,7 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 from keras import backend as K
+import tensorflow as tf
 
 ##
 #Se establecen los paths
