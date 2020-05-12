@@ -10,6 +10,7 @@ import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 from keras import backend as K
