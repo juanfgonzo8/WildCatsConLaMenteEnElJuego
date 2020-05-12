@@ -10,7 +10,7 @@ import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
-# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
@@ -154,7 +154,7 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 # Train model
-with tf.device('/gpu:0'):
+with tf.device('/gpu:1'):
     history = model.fit_generator(
                 train_generator,
     #             steps_per_epoch = train_generator.samples // batch_size,
