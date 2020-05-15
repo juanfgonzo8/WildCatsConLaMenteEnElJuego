@@ -133,6 +133,9 @@ history = model.fit_generator(
 # we should freeze:
 # for i, layer in enumerate(base_model.layers):
 #    print(i, layer.name)
+# print('Ahora model')
+# for i, layer in enumerate(model.layers):
+#    print(i, layer.name)
 
 # we chose to train the top 2 inception blocks, i.e. we will freeze
 # the first 249 layers and unfreeze the rest:
