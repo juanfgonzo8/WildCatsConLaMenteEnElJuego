@@ -173,7 +173,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
 
         logits, aux = model(features)
 
-        loss = criterion(logits, targets)
+        loss = criterion(logits, targets.squeeze_())
         loss.backward()
         optimizer.step()
 
@@ -206,7 +206,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
             features, targets = cuda(features), cuda(targets)
 
             logits = model(features)
-            loss = criterion(logits, targets)
+            loss = criterion(logits, targets.squeeze_())
 
             test_loss += loss.item()
             true_ans_list.append(targets)
