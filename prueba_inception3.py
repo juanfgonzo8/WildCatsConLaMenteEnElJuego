@@ -134,11 +134,10 @@ class IMetDataset(Dataset):
 
         if self.answer_colname is not None:
             label = torch.zeros((self.n_classes,), dtype=torch.long)
-            print(self.label_dict[cur_idx_row[self.answer_colname]])
-            print(self.answer_colname)
             label[self.label_dict[cur_idx_row[self.answer_colname]]] = 1.0
+            id = self.label_dict[cur_idx_row[self.answer_colname]]
 
-            return img, label
+            return img, id
 
         else:
             return img, img_id
