@@ -133,7 +133,7 @@ class IMetDataset(Dataset):
             img = self.transforms(img)
 
         if self.answer_colname is not None:
-            label = torch.zeros((self.n_classes,), dtype=torch.float32)
+            label = torch.zeros((self.n_classes,), dtype=torch.long)
             label[self.label_dict[cur_idx_row[self.answer_colname]]] = 1.0
 
             return img, label
