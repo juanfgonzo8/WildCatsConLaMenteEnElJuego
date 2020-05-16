@@ -169,6 +169,9 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
     for step, (features, targets) in enumerate(train_tqdm):
         targets = targets.squeeze_()
         features, targets = cuda(features), cuda(targets)
+        print(features.shape)
+        print(targets.shape)
+        print(logits.shape)
 
         optimizer.zero_grad()
 
@@ -206,10 +209,6 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
         for step, (features, targets) in enumerate(valid_iterator):
             targets = targets.squeeze_()
             features, targets = cuda(features), cuda(targets)
-            print(features.shape)
-            print(targets.shape)
-            print(logits.shape)
-
 
             logits = model(features)
             loss = criterion(logits, targets)
