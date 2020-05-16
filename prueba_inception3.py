@@ -170,12 +170,14 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
         targets = targets.squeeze_()
         features, targets = cuda(features), cuda(targets)
         print(features.shape)
+        print(targets[1,:])
         print(targets.shape)
-        print(logits.shape)
+
 
         optimizer.zero_grad()
 
         logits, aux = model(features)
+        print(logits.shape)
 
         loss = criterion(logits, targets)
         loss.backward()
