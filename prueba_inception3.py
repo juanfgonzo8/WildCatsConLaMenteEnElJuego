@@ -53,8 +53,15 @@ REVERSE_CLASSMAP = dict([(v, k) for k, v in CLASSMAP.items()])
 # Se crea el modelo
 model = models.inception_v3(pretrained='imagenet')
 
-new_head = torch.nn.Linear(model.classifier.in_features, NUM_CLASSES)
-model.inception_v3.classifier = new_head
+# new_head = torch.nn.Linear(model.classifier.in_features, NUM_CLASSES)
+# model.inception_v3.classifier = new_head
+
+# Handle the auxilary net
+num_ftrs = model.AuxLogits.fc.in_features
+model.AuxLogits.fc = torch.nn.Linear(num_ftrs, NUM_CLASSES)
+# Handle the primary net
+num_ftrs = model.fc.in_features
+model.fc = torch.nn.Linear(num_ftrs, NUM_CLASSES)
 
 model.cuda()
 
