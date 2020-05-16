@@ -145,7 +145,7 @@ class IMetDataset(Dataset):
 train_dataset = IMetDataset(train_df, TRAIN_IMGS_DIR, transforms = train_augmentation)
 test_dataset = IMetDataset(test_df, TRAIN_IMGS_DIR, transforms = val_augmentation)
 
-BS = 64
+BS = 32
 
 train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=2, pin_memory=True)
 test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=2, pin_memory=True)
@@ -218,6 +218,8 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
         all_true_ans = torch.cat(true_ans_list)
         all_preds = torch.cat(preds_cat)
 
+        print(all_true_ans.shape)
+        print(all_preds.shape)
         f1_eval = f1_score(all_true_ans, all_preds).item()
 
     logstr = f'Mean val f1: {round(f1_eval, 5)}'
