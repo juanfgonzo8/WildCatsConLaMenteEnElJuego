@@ -157,7 +157,8 @@ def kaggle_commit_logger(str_to_log, need_print = True):
 def cuda(x):
     return x.cuda(non_blocking=True)
 
-
+##
+# Se crean las funciones de train y val
 def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging=250):
     model.train();
 
@@ -220,10 +221,14 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
     kaggle_commit_logger(logstr)
     return test_loss / (step + 1), f1_eval
 
+##
+# Se define el loss y optimizador
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
 # sheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=3)
 
+##
+# Se entrena y valida
 TRAIN_LOGGING_EACH = 500
 
 train_losses = []
@@ -256,4 +261,30 @@ for epoch in range(1, N_EPOCHS + 1):
 bestmodel_logstr = f'Best f1 is {round(best_model_f1, 5)} on epoch {best_model_ep}'
 kaggle_commit_logger(bestmodel_logstr)
 
+##
+# Se guardan las graficas
+def save_graph(train_losses,valid_losses,valid_f1s):
 
+    name = 'Graficas' + '/Progress.png'
+    fig, ax1 = plt.subplots()
+
+    ax1.set_xlabel('epoch')
+    ax1.set_ylabel('Loss')
+    ax1.plot(range(len(train_losses)), train_losses, label='Train')
+    ax1.plot(range(len(valid_losses)), valid_losses, label='Val')
+    ax1.set_ylim(top=1, bottom=-1)
+    ax1.legend()
+    ax1.grid()
+    ax1.set(title='Prueba')
+
+    ax2 = ax1.twinx()
+
+    ax2.set_ylabel('F1')
+    ax2.plot(range(len(valid_f1s)), valid_f1s, 'g', label='Val')
+    ax2.set_ylim(top=1, bottom=0)
+    ax2.yaxis.grid(linestyle=(0, (1, 10)), linewidth=0.5)
+
+    fig.tight_layout()  # otherwise the right y-label is slightly clipped
+    fig.savefig(name, dpi=300)
+
+    plt.close('all')
