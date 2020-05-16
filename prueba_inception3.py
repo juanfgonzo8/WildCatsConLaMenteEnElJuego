@@ -171,7 +171,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
 
         optimizer.zero_grad()
 
-        logits = model(features)
+        logits, aux = model(features)
 
         loss = criterion(logits, targets)
         loss.backward()
