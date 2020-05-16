@@ -145,7 +145,7 @@ class IMetDataset(Dataset):
 train_dataset = IMetDataset(train_df, TRAIN_IMGS_DIR, transforms = train_augmentation)
 test_dataset = IMetDataset(test_df, TRAIN_IMGS_DIR, transforms = val_augmentation)
 
-BS = 32
+BS = 64
 
 train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=2, pin_memory=True)
 test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=2, pin_memory=True)
