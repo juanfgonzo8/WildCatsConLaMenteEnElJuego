@@ -265,7 +265,7 @@ kaggle_commit_logger(bestmodel_logstr)
 # Se guardan las graficas
 def save_graph(train_losses,valid_losses,valid_f1s):
 
-    name = 'Graficas' + '/Progress.png'
+    name = 'Graficas' + '/Progress_inception3.png'
     fig, ax1 = plt.subplots()
 
     ax1.set_xlabel('epoch')
