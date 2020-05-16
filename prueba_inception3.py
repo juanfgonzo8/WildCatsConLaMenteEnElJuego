@@ -206,6 +206,10 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
         for step, (features, targets) in enumerate(valid_iterator):
             targets = targets.squeeze_()
             features, targets = cuda(features), cuda(targets)
+            print(features.shape)
+            print(targets.shape)
+            print(logits.shape)
+
 
             logits = model(features)
             loss = criterion(logits, targets)
