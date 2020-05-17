@@ -208,7 +208,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
 
             features, targets = cuda(features), cuda(targets)
 
-            logits = model(features)
+            logits, aux = model(features)
             loss = criterion(logits, targets)
 
             test_loss += loss.item()
