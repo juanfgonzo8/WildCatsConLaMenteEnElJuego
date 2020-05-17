@@ -211,6 +211,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
 
             logits = model(features)
             _, pred = torch.topk(targets, 1)
+            print(pred.shape)
             loss = criterion(logits, pred)
 
             test_loss += loss.item()
