@@ -222,8 +222,6 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
         all_true_ans = torch.cat(true_ans_list)
         all_preds = torch.cat(preds_cat)
 
-        print(all_true_ans.shape)
-        print(all_preds.shape)
         f1_eval = f1_score(all_true_ans, all_preds).item()
 
     logstr = f'Mean val f1: {round(f1_eval, 5)}'
@@ -248,7 +246,6 @@ best_model = None
 best_model_ep = 0
 
 for epoch in range(1, N_EPOCHS + 1):
-    valid_loss, valid_f1 = validate(model, test_loader, criterion)
 
     ep_logstr = f"Starting {epoch} epoch..."
     kaggle_commit_logger(ep_logstr)
