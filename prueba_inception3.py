@@ -176,6 +176,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
         logits, aux = model(features)
 
         _, pred = torch.topk(targets, 1)
+        pred = pred.squeeze_()
         loss = criterion(logits, pred)
         loss.backward()
         optimizer.step()
@@ -211,6 +212,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
 
             logits = model(features)
             _, pred = torch.topk(targets, 1)
+            pred = pred.squeeze_()
             print(pred.shape)
             loss = criterion(logits, pred)
 
