@@ -205,7 +205,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
             valid_iterator = valid_loader
 
         for step, (features, targets) in enumerate(valid_iterator):
-            targets = targets.squeeze_()
+
             features, targets = cuda(features), cuda(targets)
 
             logits = model(features)
