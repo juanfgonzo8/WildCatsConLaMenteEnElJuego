@@ -168,14 +168,15 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
     train_tqdm = tqdm_notebook(train_loader)
 
     for step, (features, targets) in enumerate(train_tqdm):
-        targets = targets.squeeze_()
+        #targets = targets.squeeze_()
         features, targets = cuda(features), cuda(targets)
 
         optimizer.zero_grad()
 
         logits, aux = model(features)
 
-        loss = criterion(logits, targets)
+        _, pred = torch.topk(targets, 1)
+        loss = criterion(logits, pred)
         loss.backward()
         optimizer.step()
 
@@ -209,7 +210,8 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
             features, targets = cuda(features), cuda(targets)
 
             logits = model(features)
-            loss = criterion(logits, targets)
+            _, pred = torch.topk(targets, 1)
+            loss = criterion(logits, pred)
 
             test_loss += loss.item()
             true_ans_list.append(targets)
