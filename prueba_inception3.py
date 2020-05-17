@@ -135,9 +135,9 @@ class IMetDataset(Dataset):
         if self.answer_colname is not None:
             label = torch.zeros((self.n_classes,), dtype=torch.long)
             label[self.label_dict[cur_idx_row[self.answer_colname]]] = 1.0
-            id = self.label_dict[cur_idx_row[self.answer_colname]]
+            #id = self.label_dict[cur_idx_row[self.answer_colname]]
 
-            return img, id
+            return img, label
 
         else:
             return img, img_id
@@ -208,7 +208,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
 
             features, targets = cuda(features), cuda(targets)
 
-            logits, aux = model(features)
+            logits = model(features)
             loss = criterion(logits, targets)
 
             test_loss += loss.item()
@@ -244,6 +244,8 @@ best_model = None
 best_model_ep = 0
 
 for epoch in range(1, N_EPOCHS + 1):
+    valid_loss, valid_f1 = validate(model, test_loader, criterion)
+
     ep_logstr = f"Starting {epoch} epoch..."
     kaggle_commit_logger(ep_logstr)
     tr_loss = train_one_epoch(model, train_loader, criterion, optimizer, TRAIN_LOGGING_EACH)
