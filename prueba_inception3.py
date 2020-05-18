@@ -167,9 +167,9 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
 
     total_loss = 0.0
 
-    train_tqdm = tqdm_notebook(train_loader)
+    #train_tqdm = tqdm_notebook(train_loader)
 
-    for step, (features, targets) in enumerate(train_tqdm):
+    for step, (features, targets) in enumerate(train_loader):
         #targets = targets.squeeze_()
         features, targets = cuda(features), cuda(targets)
 
@@ -187,7 +187,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
 
         if (step + 1) % steps_upd_logging == 0:
             logstr = f'Train loss on step {step + 1} was {round(total_loss / (step + 1), 5)}'
-            train_tqdm.set_description(logstr)
+            #train_tqdm.set_description(logstr)
             kaggle_commit_logger(logstr, need_print=False)
 
     return total_loss / (step + 1)
