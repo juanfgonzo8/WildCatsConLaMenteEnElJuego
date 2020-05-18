@@ -147,10 +147,10 @@ class IMetDataset(Dataset):
 train_dataset = IMetDataset(train_df, TRAIN_IMGS_DIR, transforms = train_augmentation)
 test_dataset = IMetDataset(test_df, TRAIN_IMGS_DIR, transforms = val_augmentation)
 
-BS = 96
+BS = 16
 
-train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=25, pin_memory=True)
-test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=25, pin_memory=True)
+train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=0, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=0, pin_memory=True)
 
 def kaggle_commit_logger(str_to_log, need_print = False):
     if need_print:
