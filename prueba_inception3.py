@@ -149,8 +149,8 @@ test_dataset = IMetDataset(test_df, TRAIN_IMGS_DIR, transforms = val_augmentatio
 
 BS = 16
 
-train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=0, pin_memory=True)
-test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=0, pin_memory=True)
+train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=8, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=8, pin_memory=True)
 
 def kaggle_commit_logger(str_to_log, need_print = False):
     if need_print:
@@ -163,7 +163,7 @@ def cuda(x):
 ##
 # Se crean las funciones de train y val
 def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging=250):
-    model.train();
+    model.train()
 
     total_loss = 0.0
 
@@ -193,7 +193,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
     return total_loss / (step + 1)
 
 def validate(model, valid_loader, criterion, need_tqdm=False):
-    model.eval();
+    model.eval()
 
     test_loss = 0.0
     TH_TO_ACC = 0.5
@@ -298,3 +298,5 @@ def save_graph(train_losses,valid_losses,valid_f1s):
     fig.savefig(name, dpi=300)
 
     plt.close('all')
+
+save_graph(train_losses,valid_losses,valid_f1s)
