@@ -57,8 +57,10 @@ model = models.inception_v3(pretrained='imagenet')
 # model.inception_v3.classifier = new_head
 
 # Handle the auxilary net
-num_ftrs = model.AuxLogits.fc.in_features
-model.AuxLogits.fc = torch.nn.Linear(num_ftrs, NUM_CLASSES)
+# num_ftrs = model.AuxLogits.fc.in_features
+# model.AuxLogits.fc = torch.nn.Linear(num_ftrs, NUM_CLASSES)
+model.aux_logits = False
+
 # Handle the primary net
 num_ftrs = model.fc.in_features
 model.fc = torch.nn.Linear(num_ftrs, NUM_CLASSES)
@@ -147,8 +149,8 @@ test_dataset = IMetDataset(test_df, TRAIN_IMGS_DIR, transforms = val_augmentatio
 
 BS = 32
 
-train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=4, pin_memory=True)
-test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=4, pin_memory=True)
+train_loader = DataLoader(train_dataset, batch_size=BS, shuffle=True, num_workers=8, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=BS, shuffle=False, num_workers=8, pin_memory=True)
 
 def kaggle_commit_logger(str_to_log, need_print = False):
     if need_print:
@@ -156,7 +158,7 @@ def kaggle_commit_logger(str_to_log, need_print = False):
     os.system('echo ' + str_to_log)
 
 def cuda(x):
-    return x.cuda(non_blocking=True)
+    return x.cuda() #(non_blocking=True)
 
 ##
 # Se crean las funciones de train y val
@@ -173,7 +175,7 @@ def train_one_epoch(model, train_loader, criterion, optimizer, steps_upd_logging
 
         optimizer.zero_grad()
 
-        logits, aux = model(features)
+        logits = model(features)
 
         _, pred = torch.topk(targets, 1)
         pred = pred.squeeze_()
