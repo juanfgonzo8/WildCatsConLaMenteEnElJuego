@@ -158,7 +158,7 @@ def kaggle_commit_logger(str_to_log, need_print = False):
     os.system('echo ' + str_to_log)
 
 def cuda(x):
-    return x.cuda() #(non_blocking=True)
+    return x.cuda(non_blocking=True) #(non_blocking=True)
 
 ##
 # Se crean las funciones de train y val
