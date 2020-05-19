@@ -234,7 +234,7 @@ def validate(model, valid_loader, criterion, need_tqdm=False):
 # Se define el loss y optimizador
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-# sheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=3)
+sheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.5, patience=3)
 
 ##
 # Se entrena y valida
@@ -261,7 +261,7 @@ for epoch in range(1, N_EPOCHS + 1):
     valid_f1s.append(valid_f1)
     val_loss_logstr = f'Mean valid loss: {round(valid_loss, 5)}'
     kaggle_commit_logger(val_loss_logstr)
-    # sheduler.step(valid_loss)
+    sheduler.step(valid_loss)
 
     if valid_f1 >= best_model_f1:
         best_model = model
