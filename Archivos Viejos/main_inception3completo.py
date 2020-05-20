@@ -15,6 +15,8 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
+K.tensorflow_backend._get_available_gpus()
+
 # print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
 #
 # conf = tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 1})
@@ -172,5 +174,5 @@ with tf.device('/device:XLA_GPU:0'):
                 validation_data = validation_generator,
     #             validation_steps = validation_generator.samples // batch_size,
                 validation_steps = 50,
-                epochs = nb_epochs)#,
-                #verbose=2)
+                epochs = nb_epochs,
+                verbose=2)
