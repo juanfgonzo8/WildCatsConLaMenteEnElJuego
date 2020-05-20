@@ -17,8 +17,8 @@ from keras import backend as K
 
 print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
 
-sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 0.1}))
-# K.set_session(sess)
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 1}))
+K.set_session(sess)
 
 ##
 #Se establecen los paths
