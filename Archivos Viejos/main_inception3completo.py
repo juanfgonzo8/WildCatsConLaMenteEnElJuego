@@ -15,7 +15,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
-print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('GPU')))
+print('Num de GPUs:',len(tf.config.experimental.list_physical_devices()))
 
 sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True))
 # K.set_session(sess)
