@@ -34,36 +34,35 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 
 
 ##
-with tf.device('/device:XLA_GPU:0'):
-    #Se cargan los datos
-    train_df = pd.read_csv(path_csv)
-    train_df['category_id'] = train_df['category_id'].astype(str)
+#Se cargan los datos
+train_df = pd.read_csv(path_csv)
+train_df['category_id'] = train_df['category_id'].astype(str)
 
-    batch_size=128
-    img_size = 299
-    nb_epochs = 10
+batch_size=128
+img_size = 299
+nb_epochs = 10
 
-    train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
-    train_generator = train_datagen.flow_from_dataframe(
-        dataframe = train_df,
-        directory = path_train,
-        x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size),
-        batch_size=batch_size,
-        class_mode='categorical',
-        subset='training')
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
+train_generator = train_datagen.flow_from_dataframe(
+    dataframe = train_df,
+    directory = path_train,
+    x_col = 'file_name', y_col = 'category_id',
+    target_size=(img_size,img_size),
+    batch_size=batch_size,
+    class_mode='categorical',
+    subset='training')
 
-    validation_generator  = train_datagen.flow_from_dataframe(
-        dataframe = train_df,
-        directory = path_train,
-        x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size),
-        batch_size=batch_size,
-        class_mode='categorical',
-        subset='validation')
+validation_generator  = train_datagen.flow_from_dataframe(
+    dataframe = train_df,
+    directory = path_train,
+    x_col = 'file_name', y_col = 'category_id',
+    target_size=(img_size,img_size),
+    batch_size=batch_size,
+    class_mode='categorical',
+    subset='validation')
 
-    set(train_generator.class_indices)
-    nb_classes = 14
+set(train_generator.class_indices)
+nb_classes = 14
 
 ##
 #Se crea el modelo
