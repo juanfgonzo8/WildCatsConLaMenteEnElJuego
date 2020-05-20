@@ -14,7 +14,7 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
-# sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True))
 # K.set_session(sess)
 
 ##
@@ -152,17 +152,6 @@ with tf.device('/gpu:0'):
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
     #model.fit(...)
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-    print('Hasta aqui bien')
-
 
     # Train model
     # with tf.device('/gpu:0'):
