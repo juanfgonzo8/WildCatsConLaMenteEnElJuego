@@ -5,7 +5,7 @@ from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
 import tensorflow as tf
 
-import cv2
+#import cv2
 import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
