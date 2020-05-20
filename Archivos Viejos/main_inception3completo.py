@@ -3,6 +3,7 @@ from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
+import tensorflow as tf
 
 import cv2
 import pandas as pd
@@ -10,9 +11,10 @@ import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
+sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 
 ##
 #Se establecen los paths
@@ -151,12 +153,13 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 # Train model
-history = model.fit_generator(
-            train_generator,
-#             steps_per_epoch = train_generator.samples // batch_size,
-            steps_per_epoch = 100,
-            validation_data = validation_generator,
-#             validation_steps = validation_generator.samples // batch_size,
-            validation_steps = 50,
-            epochs = nb_epochs,
-            verbose=2)
+with tf.device('/CPU:1'):
+    history = model.fit_generator(
+                train_generator,
+    #             steps_per_epoch = train_generator.samples // batch_size,
+                steps_per_epoch = 100,
+                validation_data = validation_generator,
+    #             validation_steps = validation_generator.samples // batch_size,
+                validation_steps = 50,
+                epochs = nb_epochs,
+                verbose=2)
