@@ -11,11 +11,11 @@ import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+#os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
-print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
+print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('GPU')))
 
 sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True))
 # K.set_session(sess)
