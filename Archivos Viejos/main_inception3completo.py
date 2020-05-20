@@ -15,11 +15,11 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
-print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
-
-conf = tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 1})
-conf.gpu_options.allow_growth = True
-sess = tf.compat.v1.Session(config=conf)
+# print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
+#
+# conf = tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 1})
+# conf.gpu_options.allow_growth = True
+# sess = tf.compat.v1.Session(config=conf)
 #K.set_session(sess)
 
 ##
