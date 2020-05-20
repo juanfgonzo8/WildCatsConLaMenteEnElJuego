@@ -14,7 +14,7 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
-sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
 
 ##
 #Se establecen los paths
@@ -153,7 +153,7 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 # Train model
-with tf.device('/CPU:1'):
+with tf.device('/GPU:1'):
     history = model.fit_generator(
                 train_generator,
     #             steps_per_epoch = train_generator.samples // batch_size,
