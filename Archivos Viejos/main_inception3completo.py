@@ -15,7 +15,7 @@ import os
 
 from keras import backend as K
 
-print('Num de GPUs:',len(tf.config.experimental.list_physical_devices()))
+#print('Num de GPUs:',len(tf.config.experimental.list_physical_devices()))
 
 sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True))
 # K.set_session(sess)
