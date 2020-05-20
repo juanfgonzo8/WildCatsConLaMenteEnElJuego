@@ -27,7 +27,7 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 
 ##
 #Se crea el modelo
-with tf.device('/device:GPU:0'):
+with tf.device('/device:XLA_GPU:0'):
     # create the base pre-trained model
     base_model = InceptionV3(weights='imagenet', include_top=False)
 
