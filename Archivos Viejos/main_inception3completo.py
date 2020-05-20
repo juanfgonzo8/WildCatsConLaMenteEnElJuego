@@ -156,21 +156,21 @@ with tf.device('/device:XLA_GPU:0'):
     from keras.optimizers import SGD
     model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
 
-# we train our model again (this time fine-tuning the top 2 inception blocks
-# alongside the top Dense layers
-#model.fit(...)
+    # we train our model again (this time fine-tuning the top 2 inception blocks
+    # alongside the top Dense layers
+    #model.fit(...)
 
-# Train model
-print('Hasta aqui todo bien')
-print('Hasta aqui todo bien')
-print('Hasta aqui todo bien')
-#with tf.device('/device:XLA_GPU:0'):
-history = model.fit_generator(
-            train_generator,
-#             steps_per_epoch = train_generator.samples // batch_size,
-            steps_per_epoch = 100,
-            validation_data = validation_generator,
-#             validation_steps = validation_generator.samples // batch_size,
-            validation_steps = 50,
-            epochs = nb_epochs,
-            verbose=2)
+    # Train model
+    print('Hasta aqui todo bien')
+    print('Hasta aqui todo bien')
+    print('Hasta aqui todo bien')
+    #with tf.device('/device:XLA_GPU:0'):
+    history = model.fit_generator(
+                train_generator,
+    #             steps_per_epoch = train_generator.samples // batch_size,
+                steps_per_epoch = 100,
+                validation_data = validation_generator,
+    #             validation_steps = validation_generator.samples // batch_size,
+                validation_steps = 50,
+                epochs = nb_epochs)#,
+                #verbose=2)
