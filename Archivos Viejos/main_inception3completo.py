@@ -14,8 +14,8 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
-sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
-K.set_session(sess)
+# sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+# K.set_session(sess)
 
 ##
 #Se establecen los paths
