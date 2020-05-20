@@ -40,7 +40,7 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 train_df = pd.read_csv(path_csv)
 train_df['category_id'] = train_df['category_id'].astype(str)
 
-batch_size=128
+batch_size=96
 img_size = 299
 nb_epochs = 10
 
