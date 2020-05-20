@@ -15,8 +15,11 @@ os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
-K.tensorflow_backend._get_available_gpus()
+from tensorflow.python.client import device_lib
+print(device_lib.list_local_devices())
 
+K.tensorflow_backend._get_available_gpus()
+print('Llego aca')
 # print('Num de GPUs:',len(tf.config.experimental.list_physical_devices('XLA_GPU')))
 #
 # conf = tf.compat.v1.ConfigProto(log_device_placement=True,allow_soft_placement=True,device_count = {'GPU': 1 , 'CPU': 1})
