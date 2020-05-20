@@ -25,6 +25,38 @@ sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
 path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 
+
+##
+#Se cargan los datos
+train_df = pd.read_csv(path_csv)
+train_df['category_id'] = train_df['category_id'].astype(str)
+
+batch_size=32
+img_size = 299
+nb_epochs = 10
+
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
+train_generator = train_datagen.flow_from_dataframe(
+    dataframe = train_df,
+    directory = path_train,
+    x_col = 'file_name', y_col = 'category_id',
+    target_size=(img_size,img_size),
+    batch_size=batch_size,
+    class_mode='categorical',
+    subset='training')
+
+validation_generator  = train_datagen.flow_from_dataframe(
+    dataframe = train_df,
+    directory = path_train,
+    x_col = 'file_name', y_col = 'category_id',
+    target_size=(img_size,img_size),
+    batch_size=batch_size,
+    class_mode='categorical',
+    subset='validation')
+
+set(train_generator.class_indices)
+nb_classes = 14
+
 ##
 #Se crea el modelo
 with tf.device('/device:XLA_GPU:0'):
@@ -49,37 +81,6 @@ with tf.device('/device:XLA_GPU:0'):
 
     # compile the model (should be done *after* setting layers to non-trainable)
     # model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
-
-    ##
-    #Se cargan los datos
-    train_df = pd.read_csv(path_csv)
-    train_df['category_id'] = train_df['category_id'].astype(str)
-
-    batch_size=32
-    img_size = 299
-    nb_epochs = 10
-
-    train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
-    train_generator = train_datagen.flow_from_dataframe(
-        dataframe = train_df,
-        directory = path_train,
-        x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size),
-        batch_size=batch_size,
-        class_mode='categorical',
-        subset='training')
-
-    validation_generator  = train_datagen.flow_from_dataframe(
-        dataframe = train_df,
-        directory = path_train,
-        x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size),
-        batch_size=batch_size,
-        class_mode='categorical',
-        subset='validation')
-
-    set(train_generator.class_indices)
-    nb_classes = 14
 
     ##Se entrena el modelo usando fine-tune
 
