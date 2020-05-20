@@ -158,6 +158,9 @@ with tf.device('/device:XLA_GPU:0'):
     #model.fit(...)
 
     # Train model
+    print('Hasta aqui todo bien')
+    print('Hasta aqui todo bien')
+    print('Hasta aqui todo bien')
 
     history = model.fit_generator(
                 train_generator,
