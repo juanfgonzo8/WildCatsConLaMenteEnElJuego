@@ -152,6 +152,17 @@ with tf.device('/gpu:0'):
     # we train our model again (this time fine-tuning the top 2 inception blocks
     # alongside the top Dense layers
     #model.fit(...)
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+    print('Hasta aqui bien')
+
 
     # Train model
     # with tf.device('/gpu:0'):
