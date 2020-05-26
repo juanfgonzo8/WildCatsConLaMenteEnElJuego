@@ -13,14 +13,13 @@ def miCLAHE(im):
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
     clahed = cv2.cvtColor(clahed, cv2.COLOR_BGR2RGB)
     return clahed
+
 def imclahe(img):
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
-    lab_planes = cv2.split(lab)
-    print(type(lab_planes[0]))
-    print(lab_planes[0].shape)
-    lab_planes[0] = clahe.apply(np.uint16(lab_planes[0]))
-    lab = cv2.merge((lab_planes[0],lab_planes[1],lab_planes[2]))
+    l,a,b = cv2.split(lab)
+    l = clahe.apply(np.uint16(l))
+    lab = cv2.merge((l,a,b))
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
 #Funcion para Simple white balance
