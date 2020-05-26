@@ -7,11 +7,11 @@ from matplotlib import pyplot as plt
 
 def miCLAHE(im):
     elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
-    print(im.shape)
-    print(type(im))
-    print(type('o'))
-    #im = cv2.imread(im)
+
     labs = cv2.cvtColor(im, cv2.COLOR_BGR2Lab)
+    print(labs.shape)
+    print(type(labs))
+    print(labs[0].shape)
     labs[0] = elClahe.apply(labs[0])
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
     clahed = cv2.cvtColor(clahed, cv2.COLOR_BGR2RGB)
