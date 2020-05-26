@@ -18,7 +18,7 @@ def imclahe(img):
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     lab_planes = cv2.split(lab)
     print(type(lab_planes))
-    print(lab_planes.shape)
+    print(len(lab_planes))
     lab_planes[0] = clahe.apply(np.uint16(lab_planes[0]))
     lab = cv2.merge(lab_planes)
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
