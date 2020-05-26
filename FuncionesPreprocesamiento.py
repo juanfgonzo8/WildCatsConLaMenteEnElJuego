@@ -7,7 +7,8 @@ from matplotlib import pyplot as plt
 
 def miCLAHE(im):
     elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
-    im = cv2.imread('/media/user_home2/vision2020_01/Data/iWildCam2019/train_images/'+im)
+    im2 = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images/' + im
+    im = cv2.imread(im2)
     labs = cv2.cvtColor(im, cv2.COLOR_BGR2Lab)
     labs[0] = elClahe.apply(labs[0])
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
