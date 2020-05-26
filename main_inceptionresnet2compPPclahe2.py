@@ -13,7 +13,7 @@ import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 from keras import backend as K
 
