@@ -9,6 +9,7 @@ def miCLAHE(im):
     elClahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
 
     labs = cv2.cvtColor(im, cv2.COLOR_BGR2Lab)
+    print(type(labs[0,0,0]))
     labs[:,:,0] = elClahe.apply(labs[:,:,0])
     clahed = cv2.cvtColor(labs,cv2.COLOR_Lab2BGR)
     clahed = cv2.cvtColor(clahed, cv2.COLOR_BGR2RGB)
