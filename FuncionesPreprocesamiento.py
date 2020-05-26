@@ -20,7 +20,7 @@ def imclahe(img):
     print(type(lab_planes[0]))
     print(lab_planes[0].shape)
     lab_planes[0] = clahe.apply(np.uint16(lab_planes[0]))
-    lab = cv2.merge(lab_planes)
+    lab = cv2.merge((lab_planes[0],lab_planes[1],lab_planes[2]))
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
 #Funcion para Simple white balance
