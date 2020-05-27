@@ -18,8 +18,8 @@ def imclahe(img):
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     l,a,b = cv2.split(lab)
-    l = clahe.apply(np.uint16(l))
-    lab = cv2.merge(l,a,b)
+    l = clahe.apply(l)
+    lab = cv2.merge((l,a,b))
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
 #Funcion para Simple white balance
