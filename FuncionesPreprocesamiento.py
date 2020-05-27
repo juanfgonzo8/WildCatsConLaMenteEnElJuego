@@ -18,7 +18,7 @@ def imclahe(img):
     clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(16, 16))
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     l,a,b = cv2.split(lab)
-    l = clahe.apply(l)
+    l = clahe.apply(np.uint16(l))
     print(type(l))
     print(l.shape)
     print(type(a))
