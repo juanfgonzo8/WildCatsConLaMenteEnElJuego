@@ -25,6 +25,9 @@ def imclahe(img):
     l1[:,:,0] = l
     a1[:, :, 0] = a
     b1[:, :, 0] = b
+    print(l1.shape)
+    print(a1.shape)
+    print(b1.shape)
     lab = cv2.merge((l1,a1,b1))
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
