@@ -17,13 +17,6 @@ from keras import backend as K
 import inception_v4
 import numpy as np
 import cv2
-import os
-from sklearn.metrics import f1_score
-
-from ClasificarDiaNoche import diaONoche, probarDia
-from FuncionesPreprocesamiento import miCLAHE, imclahe, miWBsimple, miWBgrayworld, miWB_LB
-from CrearSubsetEquilibrado import sacarPaths
-
 
 
 # If you want to use a GPU set its index here

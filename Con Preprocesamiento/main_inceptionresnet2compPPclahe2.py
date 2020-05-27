@@ -1,15 +1,11 @@
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
-from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
-from keras.optimizers import SGD
 import tensorflow as tf
 
 from FuncionesPreprocesamiento import imclahe
 
-import cv2
 import pandas as pd
-import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
 import os
