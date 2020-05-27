@@ -23,9 +23,9 @@ def imclahe(img):
     print(l.shape)
     print(type(a))
     print(a.shape)
-    l1 = np.zeros((np.size(l)[0],np.size(l)[1],1))
-    a1 = np.zeros((np.size(a)[0], np.size(a)[1], 1))
-    b1 = np.zeros((np.size(b)[0], np.size(b)[1], 1))
+    l1 = np.zeros((l.shape[0],l.shape[1],1))
+    a1 = np.zeros((a.shape[0], a.shape[1], 1))
+    b1 = np.zeros((b.shape[0], b.shape[1], 1))
     l1[:,:,0] = l
     a1[:, :, 0] = a
     b1[:, :, 0] = b
