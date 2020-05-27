@@ -9,10 +9,16 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
+import tensorflow as tf
+
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
+
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+
+K.tensorflow_backend._get_available_gpus()
 
 ##
 #Se establecen los paths

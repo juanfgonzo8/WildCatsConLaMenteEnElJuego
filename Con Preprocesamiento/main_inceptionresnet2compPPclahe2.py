@@ -1,12 +1,13 @@
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
-import tensorflow as tf
 
 from FuncionesPreprocesamiento import imclahe
 
 import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
+
+import tensorflow as tf
 
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"

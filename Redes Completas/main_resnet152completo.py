@@ -9,14 +9,16 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
+import tensorflow as tf
+
 import os
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
-import tensorflow as tf
 
-sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True,device_count = {'GPU': 1 }))
+sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+
+K.tensorflow_backend._get_available_gpus()
 ##
 #Se establecen los paths
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
