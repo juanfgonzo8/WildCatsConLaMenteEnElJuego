@@ -19,6 +19,10 @@ def imclahe(img):
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     l,a,b = cv2.split(lab)
     l = clahe.apply(l)
+    print(type(l))
+    print(l.shape)
+    print(type(a))
+    print(a.shape)
     lab = cv2.merge((l,a,b))
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
