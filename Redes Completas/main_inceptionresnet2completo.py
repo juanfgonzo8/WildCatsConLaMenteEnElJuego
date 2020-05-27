@@ -81,7 +81,6 @@ validation_generator  = train_datagen.flow_from_dataframe(
 set(train_generator.class_indices)
 nb_classes = 14
 print(train_generator.class_indices)
-print(train_generator.classes)
 
 ##Se entrena el modelo usando fine-tune
 
