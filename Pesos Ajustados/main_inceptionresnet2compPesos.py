@@ -181,4 +181,5 @@ history = model.fit_generator(
 #             validation_steps = validation_generator.samples // batch_size,
             validation_steps = 50,
             epochs = nb_epochs,
-            verbose=2)
+            verbose=2,
+            class_weight=class_weight)
