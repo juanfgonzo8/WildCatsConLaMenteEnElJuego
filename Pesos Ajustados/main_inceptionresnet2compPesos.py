@@ -80,6 +80,7 @@ validation_generator  = train_datagen.flow_from_dataframe(
 
 set(train_generator.class_indices)
 nb_classes = 14
+print(train_generator.class_indices)
 
 ##Se entrena el modelo usando fine-tune
 
@@ -157,20 +158,21 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 #Se establecen pesos para cada clase
-class_weight = {'0': 1.,
-                '1': 22.,
-                '3': 39.,
-                '4': 59.,
-                '8': 19.,
-                '10': 120.,
-                '11': 18.,
-                '13': 15.,
-                '14': 97.,
-                '16': 22.,
-                '17': 28.,
-                '18': 43.,
-                '19': 9.,
-                '22': 3983.}
+#{'0': 0, '1': 1, '10': 2, '11': 3, '13': 4, '14': 5, '16': 6, '17': 7, '18': 8, '19': 9, '22': 10, '3': 11, '4': 12, '8': 13}
+class_weight = {0: 1.,
+                1: 22.,
+                11: 39.,
+                12: 59.,
+                13: 19.,
+                2: 120.,
+                3: 18.,
+                4: 15.,
+                5: 97.,
+                6: 22.,
+                7: 28.,
+                8: 43.,
+                9: 9.,
+                10: 3983.}
 
 # Train model
 history = model.fit_generator(
