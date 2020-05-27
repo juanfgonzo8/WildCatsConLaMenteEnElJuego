@@ -23,7 +23,13 @@ def imclahe(img):
     print(l.shape)
     print(type(a))
     print(a.shape)
-    lab = cv2.merge(([l],[a],[b]))
+    l1 = np.zeros((np.size(l)[0],np.size(l)[1],1))
+    a1 = np.zeros((np.size(a)[0], np.size(a)[1], 1))
+    b1 = np.zeros((np.size(b)[0], np.size(b)[1], 1))
+    l1[:,:,0] = l
+    a1[:, :, 0] = a
+    b1[:, :, 0] = b
+    lab = cv2.merge(l1,a1,b1)
     bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     return bgr
 #Funcion para Simple white balance
