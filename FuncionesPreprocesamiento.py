@@ -26,8 +26,7 @@ def imclahe(img):
     a1[:, :, 0] = a
     b1[:, :, 0] = b
     lab = cv2.merge((l1,a1,b1))
-    print(lab.shape)
-    bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+    bgr = cv2.cvtColor(lab.astype('float32'), cv2.COLOR_LAB2BGR)
     return bgr
 #Funcion para Simple white balance
 # Recibe BGR y saca BGR
