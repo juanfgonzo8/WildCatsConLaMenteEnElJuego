@@ -156,6 +156,22 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 # alongside the top Dense layers
 #model.fit(...)
 
+#Se establecen pesos para cada clase
+class_weight = {0: 1.,
+                1: 22.,
+                3: 39.,
+                4: 59.,
+                8: 19.,
+                10: 120.,
+                11: 18.,
+                13: 15.,
+                14: 97.,
+                16: 22.,
+                17: 28.,
+                18: 43.,
+                19: 9.,
+                22: 3983.}
+
 # Train model
 history = model.fit_generator(
             train_generator,
