@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.engine import InputLayer
+from keras.layers import Input
 
 import tensorflow as tf
 
@@ -44,8 +44,8 @@ predictions = Dense(14, activation='softmax')(x)
 # this is the model we will train
 model1 = Model(inputs=base_model.input, outputs=predictions)
 
-input_layer = InputLayer(input_shape=(299, 299, 4), name="input")
-model = Model(inputs=input_layer, outputs=model1)
+input_layer = Input(shape=(299, 299, 4), name="input")
+model = Model(inputs=input_layer, outputs=model1[1:])
 # first: train only the top layers (which were randomly initialized)
 # i.e. freeze all convolutional InceptionV3 layers
 # for layer in base_model.layers:
