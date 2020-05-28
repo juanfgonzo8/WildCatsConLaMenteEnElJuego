@@ -42,10 +42,10 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(14, activation='softmax')(x)
 
 # this is the model we will train
-model = Model(inputs=base_model.input, outputs=predictions)
+model1 = Model(inputs=base_model.input, outputs=predictions)
 
 input_layer = InputLayer(input_shape=(299, 299, 4), name="input")
-model.layers[0] = input_layer
+model = Model(inputs=input_layer, outputs=model1)
 # first: train only the top layers (which were randomly initialized)
 # i.e. freeze all convolutional InceptionV3 layers
 # for layer in base_model.layers:
@@ -72,7 +72,7 @@ def cuartaCapa(im):
     cap.fill(np.float32(loca))
     im_nueva = np.concatenate((im,cap),axis=2)
     cuartaCapa.pos += 1
-    print(np.mean(im_nueva[3]))
+    print(np.mean(cap))
     print('posicion'+str(loca))
     return im_nueva
 
