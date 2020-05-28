@@ -47,6 +47,8 @@ predictions = Dense(14, activation='softmax')(x)
 # this is the model we will train
 model = Model(inputs=base_model.input, outputs=predictions)
 
+print(model.layers[0].input_spec)
+
 #model = Model(inputs=input_layer, outputs=model1[1:])
 
 # first: train only the top layers (which were randomly initialized)
@@ -75,8 +77,9 @@ def cuartaCapa(im):
     cap.fill(np.float32(loca))
     im_nueva = np.concatenate((im,cap),axis=2)
     cuartaCapa.pos += 1
-    print(np.mean(cap))
-    print('posicion'+str(loca))
+    print('promedio '+np.mean(cap))
+    print('locacion '+str(loca))
+    print('posi '+str(cuartaCapa.pos))
     return im_nueva
 
 cuartaCapa.pos = 0
