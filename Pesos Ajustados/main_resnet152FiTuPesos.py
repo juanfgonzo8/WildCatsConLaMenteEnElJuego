@@ -86,6 +86,9 @@ nb_classes = 14
 # train the model on the new data for a few epochs
 #model.fit(...)
 
+class_weight = {0: 100.,1: 2.,11: 2.,12: 2.,13: 2.,2: 2.,3: 2.,4: 2.,5: 2.,6: 2.,7: 2.,
+                8: 2.,9: 2.,10: 1.}
+
 # Train model
 history = model.fit_generator(
             train_generator,
@@ -95,7 +98,7 @@ history = model.fit_generator(
 #             validation_steps = validation_generator.samples // batch_size,
             validation_steps = 50,
             epochs = nb_epochs,
-            verbose=2)
+            verbose=2,class_weight=class_weight)
 
 # at this point, the top layers are well trained and we can start fine-tuning
 # convolutional layers from inception V3. We will freeze the bottom N layers
@@ -168,4 +171,4 @@ history = model.fit_generator(
 #             validation_steps = validation_generator.samples // batch_size,
             validation_steps = 50,
             epochs = nb_epochs,
-            verbose=2)
+            verbose=2,class_weight=class_weight)
