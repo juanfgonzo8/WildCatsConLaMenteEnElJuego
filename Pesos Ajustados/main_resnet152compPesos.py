@@ -159,8 +159,7 @@ class_weight = {0: 100.,1: 2.,11: 2.,12: 2.,13: 2.,2: 2.,3: 2.,4: 2.,5: 2.,6: 2.
                 8: 2.,9: 2.,10: 1.}
 
 # Train model
-with tf.device('/gpu:1'):
-    history = model.fit_generator(
+history = model.fit_generator(
                 train_generator,
     #             steps_per_epoch = train_generator.samples // batch_size,
                 steps_per_epoch = 100,
