@@ -1,4 +1,4 @@
-from keras.applications.resnet import ResNet152
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
@@ -19,6 +19,7 @@ from keras import backend as K
 sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
 
 K.tensorflow_backend._get_available_gpus()
+
 ##
 #Se establecen los paths
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
@@ -28,7 +29,7 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 #Se crea el modelo
 
 # create the base pre-trained model
-base_model = ResNet152(weights='imagenet', include_top=False)
+base_model = InceptionResNetV2(weights='imagenet', include_top=False)
 
 # add a global spatial average pooling layer
 x = base_model.output
@@ -54,7 +55,7 @@ model = Model(inputs=base_model.input, outputs=predictions)
 train_df = pd.read_csv(path_csv)
 train_df['category_id'] = train_df['category_id'].astype(str)
 
-batch_size=16
+batch_size=32
 img_size = 299
 nb_epochs = 10
 
@@ -155,16 +156,13 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 # alongside the top Dense layers
 #model.fit(...)
 
-class_weight = {0: 100.,1: 2.,11: 2.,12: 2.,13: 2.,2: 2.,3: 2.,4: 2.,5: 2.,6: 2.,7: 2.,
-                8: 2.,9: 2.,10: 1.}
-
 # Train model
 history = model.fit_generator(
-                train_generator,
-    #             steps_per_epoch = train_generator.samples // batch_size,
-                steps_per_epoch = 100,
-                validation_data = validation_generator,
-    #             validation_steps = validation_generator.samples // batch_size,
-                validation_steps = 50,
-                epochs = nb_epochs,
-                verbose=2,class_weight=class_weight)
+            train_generator,
+#             steps_per_epoch = train_generator.samples // batch_size,
+            steps_per_epoch = 100,
+            validation_data = validation_generator,
+#             validation_steps = validation_generator.samples // batch_size,
+            validation_steps = 50,
+            epochs = nb_epochs,
+            verbose=2)
