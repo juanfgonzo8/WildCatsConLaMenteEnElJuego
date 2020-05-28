@@ -156,8 +156,7 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 # Train model
-with tf.device('/gpu:1'):
-    history = model.fit_generator(
+history = model.fit_generator(
                 train_generator,
     #             steps_per_epoch = train_generator.samples // batch_size,
                 steps_per_epoch = 100,
