@@ -70,9 +70,10 @@ def cuartaCapa(im):
     loca = train_df['location'][cuartaCapa.pos]
     cap = np.zeros((299,299,1))
     cap.fill(np.float32(loca))
-    im_nueva = np.stack((im,cap),axis=2)
+    im_nueva = np.concatenate((im,cap),axis=2)
     cuartaCapa.pos += 1
     print(np.mean(im_nueva))
+    print(loca)
     return im_nueva
 
 cuartaCapa.pos = 0
