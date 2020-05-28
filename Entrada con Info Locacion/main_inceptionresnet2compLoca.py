@@ -9,10 +9,12 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
+from keras.engine import InputLayer
+
 import tensorflow as tf
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 from keras import backend as K
 
@@ -42,10 +44,14 @@ predictions = Dense(14, activation='softmax')(x)
 # this is the model we will train
 model = Model(inputs=base_model.input, outputs=predictions)
 
+input_layer = InputLayer(input_shape=(299, 299, 4), name="input")
+model.layers[0] = input_layer
 # first: train only the top layers (which were randomly initialized)
 # i.e. freeze all convolutional InceptionV3 layers
 # for layer in base_model.layers:
 #     layer.trainable = False
+
+
 
 # compile the model (should be done *after* setting layers to non-trainable)
 # model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -54,12 +60,29 @@ model = Model(inputs=base_model.input, outputs=predictions)
 #Se cargan los datos
 train_df = pd.read_csv(path_csv)
 train_df['category_id'] = train_df['category_id'].astype(str)
+train_df['location'] = train_df['location'].astype(int)
 
+##
+# Anadir capa con contenido del lugar
+
+def cuartaCapa(im):
+    global train_df
+    loca = train_df['location'][cuartaCapa.pos]
+    cap = np.zeros((299,299,1))
+    cap.fill(np.float32(loca))
+    im_nueva = np.stack((im,cap),axis=2)
+    cuartaCapa.pos += 1
+    print(np.mean(im_nueva))
+    return im_nueva
+
+cuartaCapa.pos = 0
+
+##
 batch_size=32
 img_size = 299
 nb_epochs = 10
 
-train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25,preprocessing_function=cuartaCapa)
 train_generator = train_datagen.flow_from_dataframe(
         dataframe = train_df,
         directory = path_train,
