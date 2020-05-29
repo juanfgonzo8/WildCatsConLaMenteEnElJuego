@@ -58,8 +58,14 @@ model = Model(inputs=pre_model.input, outputs=predictions)
 # i.e. freeze all convolutional InceptionV3 layers
 # for layer in base_model.layers:
 #     layer.trainable = False
-
+print('Out')
 for layer in model.layers[0:5]:
+    print(layer.name)
+print('Base')
+for layer in base_model.layers[0:5]:
+    print(layer.name)
+print('Pre')
+for layer in pre_model.layers[0:5]:
     print(layer.name)
 
 # compile the model (should be done *after* setting layers to non-trainable)
