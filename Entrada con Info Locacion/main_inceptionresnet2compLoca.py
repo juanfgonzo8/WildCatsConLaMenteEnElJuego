@@ -47,7 +47,7 @@ predictions = Dense(14, activation='softmax')(x)
 # this is the model we will train
 model = Model(inputs=base_model.input, outputs=predictions)
 
-model.layers[0] = None
+model.layers[0].weights = None
 
 #model = Model(inputs=input_layer, outputs=model1[1:])
 
