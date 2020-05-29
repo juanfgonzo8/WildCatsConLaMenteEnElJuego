@@ -34,6 +34,7 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 base_model = InceptionResNetV2(weights='imagenet', include_top=False)
 
 print(base_model.layers[0].name)
+print(base_model.layers[1].name)
 
 input_layer = Input(shape=(299, 299, 4), name="input")
 base_model.layers[0] = input_layer
