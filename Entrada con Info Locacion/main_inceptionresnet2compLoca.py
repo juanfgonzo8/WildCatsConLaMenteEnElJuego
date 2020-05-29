@@ -59,7 +59,8 @@ model = Model(inputs=pre_model.input, outputs=predictions)
 # for layer in base_model.layers:
 #     layer.trainable = False
 
-
+for layer in model.layers[0:5]:
+    print(layer.name)
 
 # compile the model (should be done *after* setting layers to non-trainable)
 # model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -202,26 +203,25 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #             verbose=2)
 
 
-with tf.device('/GPU:0'):
-    for epoch in range(nb_epochs):
+for epoch in range(nb_epochs):
 
-        loss = 0
-        print('Epoch '+str(epoch+1)+'/10')
-        for image_batch, label_batch in train_generator:
-            new_batch = np.zeros((batch_size, 299, 299, 4))
-            for i,im in enumerate(image_batch):
-                im_new = cuartaCapa(im)
-                new_batch[i,:,:,:] = im_new
-            loss += model.fit(np.float32(new_batch),label_batch)
-            print('.')
-        print('Hizo una epoca')
+    loss = 0
+    print('Epoch '+str(epoch+1)+'/10')
+    for image_batch, label_batch in train_generator:
+        new_batch = np.zeros((batch_size, 299, 299, 4))
+        for i,im in enumerate(image_batch):
+            im_new = cuartaCapa(im)
+            new_batch[i,:,:,:] = im_new
+        loss += model.fit(np.float32(new_batch),label_batch)
+        print('.')
+    print('Hizo una epoca')
 
-        for image_batch, label_batch in train_generator:
-            new_batch = np.zeros((batch_size, 299, 299, 4))
-            for i,im in enumerate(image_batch):
-                im_new = cuartaCapa(im)
-                new_batch[i,:,:,:] = im_new
-            model.test_on_batch(new_batch,label_batch,reset_metrics=False)
+    for image_batch, label_batch in train_generator:
+        new_batch = np.zeros((batch_size, 299, 299, 4))
+        for i,im in enumerate(image_batch):
+            im_new = cuartaCapa(im)
+            new_batch[i,:,:,:] = im_new
+        model.test_on_batch(new_batch,label_batch,reset_metrics=False)
 
 
 
