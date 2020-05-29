@@ -100,7 +100,7 @@ train_generator = train_datagen.flow_from_dataframe(
         target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
-        subset='training')
+        subset='training',shuffle=False)
 
 validation_generator  = train_datagen.flow_from_dataframe(
         dataframe = train_df,
@@ -109,7 +109,7 @@ validation_generator  = train_datagen.flow_from_dataframe(
         target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
-        subset='validation')
+        subset='validation',shuffle=False)
 
 set(train_generator.class_indices)
 nb_classes = 14
@@ -200,6 +200,25 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #             epochs = nb_epochs,
 #             verbose=2)
 
-image_batch, label_batch = next(train_generator)
-print(image_batch.shape)
-print(label_batch.shape)
+
+
+for epoch in range(nb_epochs):
+    loss = 0
+    for image_batch, label_batch in train_generator:
+        new_batch = np.zeros((32, 299, 299, 4))
+        for i,im in enumerate(image_batch):
+            im_new = cuartaCapa(im)
+            new_batch[i,:,:,:] = im_new
+        model.train_on_batch(new_batch,label_batch,reset_metrics=False)
+    print('Hizo una epoca')
+
+    for image_batch, label_batch in train_generator:
+        new_batch = np.zeros((32, 299, 299, 4))
+        for i,im in enumerate(image_batch):
+            im_new = cuartaCapa(im)
+            new_batch[i,:,:,:] = im_new
+        model.test_on_batch(new_batch,label_batch,reset_metrics=False)
+
+# image_batch, label_batch = next(train_generator)
+# print(image_batch.shape)
+# print(label_batch.shape)
