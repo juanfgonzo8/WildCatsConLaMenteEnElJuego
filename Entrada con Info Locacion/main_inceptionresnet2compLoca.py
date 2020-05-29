@@ -212,7 +212,7 @@ for epoch in range(nb_epochs):
             new_batch[i,:,:,:] = im_new
             print(type(im[0,0,0]))
             print(type(new_batch[0, 0, 0, 0]))
-        model.train_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
+        loss += model.train_on_batch(np.float32(new_batch),label_batch)
         print('.')
     print('Hizo una epoca')
 
