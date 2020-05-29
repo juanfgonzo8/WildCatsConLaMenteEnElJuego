@@ -203,18 +203,6 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 
 
 for epoch in range(nb_epochs):
-    loss = 0
-    print('Epoch '+str(epoch+1)+'/10')
-    for image_batch, label_batch in train_generator:
-        new_batch = np.zeros((batch_size, 299, 299, 4))
-        for i,im in enumerate(image_batch):
-            im_new = cuartaCapa(im)
-            new_batch[i,:,:,:] = im_new
-            print(type(im[0,0,0]))
-            print(type(new_batch[0, 0, 0, 0]))
-        loss += model.train_on_batch(np.float32(new_batch),label_batch)
-        print('.')
-    print('Hizo una epoca')
 
     for image_batch, label_batch in train_generator:
         new_batch = np.zeros((batch_size, 299, 299, 4))
@@ -222,6 +210,18 @@ for epoch in range(nb_epochs):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
         model.test_on_batch(new_batch,label_batch,reset_metrics=False)
+
+    loss = 0
+    print('Epoch '+str(epoch+1)+'/10')
+    for image_batch, label_batch in train_generator:
+        new_batch = np.zeros((batch_size, 299, 299, 4))
+        for i,im in enumerate(image_batch):
+            im_new = cuartaCapa(im)
+            new_batch[i,:,:,:] = im_new
+        loss += model.train_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
+        print('.')
+    print('Hizo una epoca')
+
 
 # image_batch, label_batch = next(train_generator)
 # print(image_batch.shape)
