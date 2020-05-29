@@ -88,7 +88,7 @@ def cuartaCapa(im):
 cuartaCapa.pos = 0
 
 ##
-batch_size=32
+batch_size=16
 img_size = 299
 nb_epochs = 10
 
@@ -211,6 +211,7 @@ for epoch in range(nb_epochs):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
         model.train_on_batch(new_batch,label_batch,reset_metrics=False)
+        print('.')
     print('Hizo una epoca')
 
     for image_batch, label_batch in train_generator:
