@@ -92,7 +92,7 @@ batch_size=32
 img_size = 299
 nb_epochs = 10
 
-train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25,preprocessing_function=cuartaCapa)
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)  #,preprocessing_function=cuartaCapa)
 train_generator = train_datagen.flow_from_dataframe(
         dataframe = train_df,
         directory = path_train,
