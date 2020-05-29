@@ -201,7 +201,7 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #             verbose=2)
 
 
-with tf.device('/GPU_XLA:0'):
+with tf.device('/GPU:0'):
     for epoch in range(nb_epochs):
 
         loss = 0
