@@ -190,15 +190,15 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 #model.fit(...)
 
 # Train model
-history = model.fit_generator(
-            train_generator,
-#             steps_per_epoch = train_generator.samples // batch_size,
-            steps_per_epoch = 100,
-            validation_data = validation_generator,
-#             validation_steps = validation_generator.samples // batch_size,
-            validation_steps = 50,
-            epochs = nb_epochs,
-            verbose=2)
+# history = model.fit_generator(
+#             train_generator,
+# #             steps_per_epoch = train_generator.samples // batch_size,
+#             steps_per_epoch = 100,
+#             validation_data = validation_generator,
+# #             validation_steps = validation_generator.samples // batch_size,
+#             validation_steps = 50,
+#             epochs = nb_epochs,
+#             verbose=2)
 
 image_batch, label_batch = next(train_generator)
 print(image_batch.shape)
