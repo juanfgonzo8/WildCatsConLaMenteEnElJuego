@@ -206,7 +206,7 @@ for epoch in range(nb_epochs):
     loss = 0
     print('Epoch '+str(epoch+1)+'/10')
     for image_batch, label_batch in train_generator:
-        new_batch = np.zeros((32, 299, 299, 4))
+        new_batch = np.zeros((batch_size, 299, 299, 4))
         for i,im in enumerate(image_batch):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
