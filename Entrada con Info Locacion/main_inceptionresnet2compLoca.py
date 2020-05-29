@@ -97,7 +97,7 @@ train_generator = train_datagen.flow_from_dataframe(
         dataframe = train_df,
         directory = path_train,
         x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size,4),
+        target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
         subset='training')
@@ -106,7 +106,7 @@ validation_generator  = train_datagen.flow_from_dataframe(
         dataframe = train_df,
         directory = path_train,
         x_col = 'file_name', y_col = 'category_id',
-        target_size=(img_size,img_size,4),
+        target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
         subset='validation')
@@ -199,3 +199,7 @@ history = model.fit_generator(
             validation_steps = 50,
             epochs = nb_epochs,
             verbose=2)
+
+image_batch, label_batch = next(train_generator)
+print(image_batch.shape)
+print(label_batch.shape)
