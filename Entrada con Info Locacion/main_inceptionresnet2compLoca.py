@@ -50,7 +50,7 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(14, activation='softmax')(x)
 
 # this is the model we will train
-model = Model(inputs=base_model.input, outputs=predictions)
+model = Model(inputs=pre_model.input, outputs=predictions)
 
 #model = Model(inputs=input_layer, outputs=model1[1:])
 
