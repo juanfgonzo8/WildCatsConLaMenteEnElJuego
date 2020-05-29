@@ -211,7 +211,7 @@ with tf.device('/GPU:0'):
             for i,im in enumerate(image_batch):
                 im_new = cuartaCapa(im)
                 new_batch[i,:,:,:] = im_new
-            loss += model.train_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
+            loss += model.fit(np.float32(new_batch),label_batch)
             print('.')
         print('Hizo una epoca')
 
