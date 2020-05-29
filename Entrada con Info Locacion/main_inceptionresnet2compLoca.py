@@ -80,9 +80,9 @@ def cuartaCapa(im):
     cap.fill(np.float32(loca))
     im_nueva = np.concatenate((im,cap),axis=2)
     cuartaCapa.pos += 1
-    print('promedio '+str(np.mean(cap)))
-    print('locacion '+str(loca))
-    print('posi '+str(cuartaCapa.pos))
+    # print('promedio '+str(np.mean(cap)))
+    # print('locacion '+str(loca))
+    # print('posi '+str(cuartaCapa.pos))
     return im_nueva
 
 cuartaCapa.pos = 0
