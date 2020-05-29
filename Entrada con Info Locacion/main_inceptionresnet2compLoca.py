@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras.layers import Input
+from keras import Input
 
 import tensorflow as tf
 
@@ -46,8 +46,6 @@ predictions = Dense(14, activation='softmax')(x)
 
 # this is the model we will train
 model = Model(inputs=base_model.input, outputs=predictions)
-
-model.layers[0].weights = None
 
 #model = Model(inputs=input_layer, outputs=model1[1:])
 
