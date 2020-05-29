@@ -31,16 +31,18 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 #Se crea el modelo
 
 # create the base pre-trained model
-base_model = InceptionResNetV2(weights='imagenet', include_top=False, input_tensor=Input(shape=(4,), name="input"))
+base_model = InceptionResNetV2(weights='imagenet', include_top=False)
+# , input_tensor=Input(shape=(4,), name="input")
+pre_model = InceptionResNetV2(weights=None, input_shape=(299,299,4), include_top=False)
 
-print(base_model.layers[0].name)
-print(base_model.layers[1].name)
+for new_layer, layer in zip(pre_model.layers[1:], base_model.layers[1:]):
+    new_layer.set_weights(layer.get_weights())
 
 # input_layer = Input(shape=(299, 299, 4), name="input")
 # base_model.layers[0] = input_layer
 
 # add a global spatial average pooling layer
-x = base_model.output
+x = pre_model.output
 x = GlobalAveragePooling2D()(x)
 # let's add a fully-connected layer
 x = Dense(1024, activation='relu')(x)
