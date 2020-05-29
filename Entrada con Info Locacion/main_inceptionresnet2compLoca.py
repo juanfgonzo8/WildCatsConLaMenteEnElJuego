@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
-from keras import Input
+from keras.layers import Input
 
 import tensorflow as tf
 
@@ -31,13 +31,13 @@ path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
 #Se crea el modelo
 
 # create the base pre-trained model
-base_model = InceptionResNetV2(weights='imagenet', include_top=False)
+base_model = InceptionResNetV2(weights='imagenet', include_top=False, input_tensor=Input(shape=(299, 299, 4), name="input"))
 
 print(base_model.layers[0].name)
 print(base_model.layers[1].name)
 
-input_layer = Input(shape=(299, 299, 4), name="input")
-base_model.layers[0] = input_layer
+# input_layer = Input(shape=(299, 299, 4), name="input")
+# base_model.layers[0] = input_layer
 
 # add a global spatial average pooling layer
 x = base_model.output
