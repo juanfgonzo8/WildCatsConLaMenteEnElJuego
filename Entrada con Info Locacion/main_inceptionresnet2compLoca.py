@@ -35,7 +35,7 @@ base_model = InceptionResNetV2(weights='imagenet', include_top=False)
 # , input_tensor=Input(shape=(4,), name="input")
 pre_model = InceptionResNetV2(weights=None, input_shape=(299,299,4), include_top=False)
 
-for new_layer, layer in zip(pre_model.layers[1:], base_model.layers[1:]):
+for new_layer, layer in zip(pre_model.layers[2:], base_model.layers[2:]):
     new_layer.set_weights(layer.get_weights())
 
 # input_layer = Input(shape=(299, 299, 4), name="input")
