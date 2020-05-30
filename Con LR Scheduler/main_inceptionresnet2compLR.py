@@ -57,7 +57,7 @@ train_df['category_id'] = train_df['category_id'].astype(str)
 
 batch_size=32
 img_size = 299
-nb_epochs = 10
+nb_epochs = 20
 
 train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
 train_generator = train_datagen.flow_from_dataframe(
