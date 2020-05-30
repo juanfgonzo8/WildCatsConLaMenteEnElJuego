@@ -217,9 +217,9 @@ for epoch in range(nb_epochs):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
         print('.')
-        loss = model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
+        model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
     print('Metricas train')
-    print(loss)
+    print('..')
 
 
     for image_batch, label_batch in train_generator:
@@ -227,9 +227,9 @@ for epoch in range(nb_epochs):
         for i,im in enumerate(image_batch):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
-        loss_test = model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
+        model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
     print('Metricas test')
-    print(loss_test)
+    print('..')
 
     model.reset_metrics()
 
