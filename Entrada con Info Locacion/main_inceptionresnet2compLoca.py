@@ -219,10 +219,10 @@ for epoch in range(nb_epochs):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
         if cont == steps_train:
+            print('Metricas train')
             print(model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False))
+        print('Batch '+str(cont)+'+'+str(steps_train))
         model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
-    print('Metricas train')
-    print('..')
 
     steps_test = validation_generator.samples // batch_size
     cont = 1
