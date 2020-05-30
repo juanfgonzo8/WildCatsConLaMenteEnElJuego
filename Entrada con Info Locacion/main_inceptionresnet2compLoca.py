@@ -219,7 +219,7 @@ for epoch in range(nb_epochs):
             new_batch[i,:,:,:] = im_new
         print(type(label_batch))
         print(type(new_batch))
-        loss += model.train_on_batch(np.float32(new_batch),y=label_batch)
+        model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
         print('.')
     print('Hizo una epoca')
 
@@ -228,7 +228,7 @@ for epoch in range(nb_epochs):
         for i,im in enumerate(image_batch):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
-        model.test_on_batch(new_batch,label_batch,reset_metrics=False)
+        model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
 
 
 
