@@ -170,4 +170,4 @@ history = model.fit_generator(
             validation_steps = 50,
             epochs = nb_epochs,
             verbose=2,
-            callbacks=reduce_lr)
+            callbacks=[reduce_lr])
