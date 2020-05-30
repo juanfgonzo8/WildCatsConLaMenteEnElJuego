@@ -220,6 +220,7 @@ for epoch in range(nb_epochs):
             new_batch[i,:,:,:] = im_new
         if cont == steps_train:
             print(model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False))
+        print('.')
         model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
     print('Metricas train')
     print('..')
