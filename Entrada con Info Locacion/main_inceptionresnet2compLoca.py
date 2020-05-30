@@ -211,22 +211,28 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 for epoch in range(nb_epochs):
 
     print('Epoch '+str(epoch+1)+'/10')
+    cont = 1
+    steps_train = train_generator.samples // batch_size
     for image_batch, label_batch in train_generator:
         new_batch = np.zeros((batch_size, 299, 299, 4))
         for i,im in enumerate(image_batch):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
-        print('.')
+        if cont == steps_train:
+            print(model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False))
         model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
     print('Metricas train')
     print('..')
 
-
+    steps_test = validation_generator.samples // batch_size
+    cont = 1
     for image_batch, label_batch in train_generator:
         new_batch = np.zeros((batch_size, 299, 299, 4))
         for i,im in enumerate(image_batch):
             im_new = cuartaCapa(im)
             new_batch[i,:,:,:] = im_new
+        if cont == steps_test:
+            print(model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False))
         model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
     print('Metricas test')
     print('..')
