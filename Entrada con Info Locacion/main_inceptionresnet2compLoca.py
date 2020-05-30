@@ -210,7 +210,6 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 
 for epoch in range(nb_epochs):
 
-    model.reset_metrics()
     print('Epoch '+str(epoch+1)+'/10')
     for image_batch, label_batch in train_generator:
         new_batch = np.zeros((batch_size, 299, 299, 4))
@@ -230,6 +229,8 @@ for epoch in range(nb_epochs):
         loss_test = model.test_on_batch(np.float32(new_batch),label_batch,reset_metrics=False)
     print('Metricas test')
     print(loss_test)
+
+    model.reset_metrics()
 
 
 
