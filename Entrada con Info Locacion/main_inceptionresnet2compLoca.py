@@ -221,7 +221,7 @@ for epoch in range(nb_epochs):
         if cont == steps_train:
             print('Metricas train')
             print(model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False))
-        print('Batch '+str(cont)+'+'+str(steps_train))
+        print('Batch '+str(cont)+'/'+str(steps_train))
         cont += 1
         model.train_on_batch(np.float32(new_batch),y=label_batch,reset_metrics=False)
 
