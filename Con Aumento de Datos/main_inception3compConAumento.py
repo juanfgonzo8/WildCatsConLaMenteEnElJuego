@@ -49,7 +49,7 @@ img_size = 299
 nb_epochs = 10
 
 train_datagen = ImageDataGenerator(  
-    rescale=1. / 255,
+    rescale=1./255, validation_split=0.25,
     zoom_range=0.2,
     rotation_range = 5,
     shear_range = 0.15 ,
