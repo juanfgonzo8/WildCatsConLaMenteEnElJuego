@@ -13,7 +13,7 @@ from keras.preprocessing.image import ImageDataGenerator
 print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 from keras import backend as K
 
