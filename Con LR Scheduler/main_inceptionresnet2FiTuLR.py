@@ -44,11 +44,15 @@ model = Model(inputs=base_model.input, outputs=predictions)
 
 # first: train only the top layers (which were randomly initialized)
 # i.e. freeze all convolutional InceptionV3 layers
-# for layer in base_model.layers:
-#     layer.trainable = False
+for layer in base_model.layers:
+    layer.trainable = False
 
 # compile the model (should be done *after* setting layers to non-trainable)
-# model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+from keras.callbacks import ReduceLROnPlateau
+
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
+                              patience=5, min_lr=0.001)
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
 ##
 #Se cargan los datos
@@ -80,7 +84,6 @@ validation_generator  = train_datagen.flow_from_dataframe(
 
 set(train_generator.class_indices)
 nb_classes = 14
-print(train_generator.class_indices)
 
 ##Se entrena el modelo usando fine-tune
 
@@ -88,15 +91,15 @@ print(train_generator.class_indices)
 #model.fit(...)
 
 # Train model
-# history = model.fit_generator(
-#             train_generator,
-# #             steps_per_epoch = train_generator.samples // batch_size,
-#             steps_per_epoch = 100,
-#             validation_data = validation_generator,
-# #             validation_steps = validation_generator.samples // batch_size,
-#             validation_steps = 50,
-#             epochs = nb_epochs,
-#             verbose=2)
+history = model.fit_generator(
+            train_generator,
+#             steps_per_epoch = train_generator.samples // batch_size,
+            steps_per_epoch = 100,
+            validation_data = validation_generator,
+#             validation_steps = validation_generator.samples // batch_size,
+            validation_steps = 50,
+            epochs = nb_epochs,
+            verbose=2,callbacks=[reduce_lr])
 
 # at this point, the top layers are well trained and we can start fine-tuning
 # convolutional layers from inception V3. We will freeze the bottom N layers
@@ -104,16 +107,19 @@ print(train_generator.class_indices)
 
 # let's visualize layer names and layer indices to see how many layers
 # we should freeze:
-#for i, layer in enumerate(base_model.layers):
-#   print(i, layer.name)
+# for i, layer in enumerate(base_model.layers):
+#    print(i, layer.name)
 
+##
 # we chose to train the top 2 inception blocks, i.e. we will freeze
 # the first 249 layers and unfreeze the rest:
-# for layer in model.layers[:249]:
-#    layer.trainable = False
-# for layer in model.layers[249:]:
-#    layer.trainable = True
+for layer in model.layers[:715]:
+   layer.trainable = False
+for layer in model.layers[715:]:
+   layer.trainable = True
 
+#Numero de capas de los ultimos dos bloque = 110
+#Numero total de capas = 825
 
 ##
 #Metrica final
@@ -151,34 +157,13 @@ def f1(y_true, y_pred):
 # we need to recompile the model for these modifications to take effect
 # we use SGD with a low learning rate
 from keras.optimizers import SGD
-from keras.callbacks import ReduceLROnPlateau
 
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
-                              patience=5, min_lr=0.001)
 model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
 
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
 #model.fit(...)
 
-##
-#Se establecen pesos para cada clase
-#{'0': 0, '1': 1, '10': 2, '11': 3, '13': 4, '14': 5, '16': 6, '17': 7, '18': 8, '19': 9, '22': 10, '3': 11, '4': 12, '8': 13}
-
-#Pesos alreves
-# class_weight = {0: 1.,1: 22.,
-#                 11: 39.,12: 59.,13: 19.,2: 120.,3: 18.,4: 15.,5: 97.,6: 22.,7: 28.,8: 43.,9: 9.,10: 3983.}
-#Pesos son numero de instancias
-# class_weight = {0: 131454.,1: 6102.,11: 3398.,12: 2210.,13: 6938.,2: 1093.,3: 7209.,4: 8623.,5: 1361.,6: 5975.,7: 4759.,
-#                 8: 3035.,9: 14106.,10: 33.}
-# class_weight = {0: 100.,1: 2.,11: 2.,12: 2.,13: 2.,2: 2.,3: 2.,4: 2.,5: 2.,6: 2.,7: 2.,
-#                 8: 2.,9: 2.,10: 1.}
-class_weight = {0: 1.,1: 50.,11: 50.,12: 50.,13: 50.,2: 50.,3: 50.,4: 50.,5: 50.,6: 50.,7: 50.,
-                8: 50.,9: 50.,10: 100.}
-
-
-##
-#Se entrena
 # Train model
 history = model.fit_generator(
             train_generator,
@@ -188,6 +173,4 @@ history = model.fit_generator(
 #             validation_steps = validation_generator.samples // batch_size,
             validation_steps = 50,
             epochs = nb_epochs,
-            verbose=2,
-            class_weight=class_weight,
-            callbacks=[reduce_lr])
+            verbose=2,callbacks=[reduce_lr])
