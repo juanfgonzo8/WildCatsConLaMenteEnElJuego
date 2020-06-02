@@ -91,7 +91,7 @@ train_generator = train_datagen.flow_from_dataframe(
         target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
-        subset='training')
+        subset='training',shuffle=False)
 
 validation_generator  = train_datagen.flow_from_dataframe(
         dataframe = train_df,
@@ -100,7 +100,7 @@ validation_generator  = train_datagen.flow_from_dataframe(
         target_size=(img_size,img_size),
         batch_size=batch_size,
         class_mode='categorical',
-        subset='validation')
+        subset='validation',shuffle=False)
 
 set(train_generator.class_indices)
 nb_classes = 14
@@ -189,12 +189,12 @@ model.evaluate_generator(validation_generator, steps=200, verbose=2)
 pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
 
-# #Se muestra la matriz de confusion
-# cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1))
-# fig = plt.figure(figsize = (30,20))
-# sn.set(font_scale=1.4) #for label size
-# sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
-# fig.savefig('matriz.png')
+#Se muestra la matriz de confusion
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='all')
+fig = plt.figure(figsize = (30,20))
+sn.set(font_scale=1.4) #for label size
+sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
+fig.savefig('matriz.png')
 
 
 #Reporte de clasificacion
