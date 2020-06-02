@@ -208,7 +208,7 @@ sn.set(font_scale=1.4) #for label size
 sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
 fig.savefig('matriz_pred.png')
 
-# #Reporte de clasificacion
-# class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
-#                'Squirrel','Rodent','Rabbit']
-# print(classification_report(validation_generator.classes[0:(200*32)], predicted, target_names=class_names))
+#Reporte de clasificacion
+class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
+               'Squirrel','Rodent','Rabbit']
+print(classification_report(validation_generator.classes[0:(200*32)], predicted, target_names=class_names))
