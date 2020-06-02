@@ -182,7 +182,7 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 #model.fit(...)
 if args.mode == 'test':
     model.load_weights(path_pesos+'/pesos_inicial.h5')
-    model.evaluate_generator(validation_generator, steps=50, verbose=2)
+    print(model.evaluate_generator(validation_generator, steps=50, verbose=2))
 elif args.mode == 'demo':
     name = args.img
     model.load_weights(path_pesos + '/pesos_inicial.h5')
