@@ -191,7 +191,7 @@ print(pred.shape)
 predicted = np.argmax(pred, axis=1)
 print(predicted.shape)
 #Se muestra la matriz de confusion
-cm = confusion_matrix(validation_generator.classes[0:(200*32)+1], np.argmax(pred, axis=1))
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1))
 fig = plt.figure(figsize = (30,20))
 sn.set(font_scale=1.4) #for label size
 sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
