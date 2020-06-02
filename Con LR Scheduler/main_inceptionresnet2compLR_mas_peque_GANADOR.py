@@ -3,11 +3,9 @@ from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
-from PIL import Image
-
-import argparse
 
 import cv2
+import keras
 import pandas as pd
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
@@ -15,36 +13,24 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
 
 from keras import backend as K
 
 sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
 
-K.tensorflow_backend._get_available_gpus()
-
-
-##
-#Se toman los argumentos de entrada
-parser = argparse.ArgumentParser(description='Codigo principal')
-parser.add_argument('--mode', type=str, default=None,
-                    help='Define si se prueba el codigo o se entrena (None, demo o test)')
-parser.add_argument('--img', type=str, default=None,
-                    help='Imagen a probar en modo demo')
-
-args = parser.parse_args()
+#K.tensorflow_backend._get_available_gpus()
 
 ##
 #Se establecen los paths
-path_csv = '/media/user_home2/vision2020_01/Data/Proyectos_finales/iWildCam2019/train.csv'
-path_train = '/media/user_home2/vision2020_01/Data/Proyectos_finales/iWildCam2019/train_images'
-path_pesos = '/media/user_home2/vision2020_01/Data/Proyectos_finales/iWildCam2019/Pesos'
+path_csv = "/home/local/UANDES/jn.ariza10/P_Vision/train.csv"
+path_train = "/home/local/UANDES/jn.ariza10/P_Vision/train_images/"
 
 ##
 #Se plantan seeds
 from numpy.random import seed
 seed(1)
-tf.random.set_seed(2)
+tf.compat.v1.set_random_seed(2)
 
 ##
 #Se crea el modelo
@@ -78,7 +64,7 @@ train_df['category_id'] = train_df['category_id'].astype(str)
 
 batch_size=32
 img_size = 299
-nb_epochs = 20
+nb_epochs = 30
 
 train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.25)
 train_generator = train_datagen.flow_from_dataframe(
@@ -180,49 +166,25 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
 #model.fit(...)
-if args.mode == 'test':
-    model.load_weights(path_pesos+'/pesos_inicial.h5')
-    ev = model.evaluate_generator(validation_generator, steps=200, verbose=2)
-    print('Loss: ' + str(ev[0]))
-    print('Accuracy: ' + str(ev[1]))
-    print('F1: ' + str(ev[2]))
-elif args.mode == 'demo':
-    name = args.img
-    model.load_weights(path_pesos + '/pesos_inicial.h5')
-    if len(name) > 49:
-        im = np.asarray(Image.open(name))
-    else:
-        if name[0] == '/':
-            im = np.asarray(Image.open(path_train+name))
-        else:
-            im = np.asarray(Image.open(path_train+'/'+name))
-    #print(validation_generator.class_indices)
 
-    res = model.predict_on_batch(np.array([im]))
+#Path donde se guardan los pesos
 
-    predicted = np.argmax(res, axis=1)
-    print('Resultado: '+str(predicted[0]))
-    categs = { 0:'Empty',1:'Deer',2:'Fox',3:'Coyote',4:'Racoon',5:'Skunk',6:'Bobcat',7:'Cat',8:'Dog',
-               9:'Opposum',10:'Mountain Lion',11:'Squirrel',12:'Rodent',13:'Rabbit'}
-    print('Categoria: '+categs[predicted[0]])
-else:
-    #Path donde se guardan los pesos
-    checkpoint_filepath = path_pesos
-    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=checkpoint_filepath,
-        save_weights_only=True,
-        monitor='val_accuracy',
-        mode='max',
-        save_best_only=True)
+checkpoint_filepath = "/home/local/UANDES/jn.ariza10/P_Vision/pesos30.h5"
+model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_filepath,
+    save_weights_only=True,
+    monitor='val_accuracy',
+    mode='max',
+    save_best_only=True)
 
-    # Train model
-    history = model.fit_generator(
-                train_generator,
-    #             steps_per_epoch = train_generator.samples // batch_size,
-                steps_per_epoch = 100,
-                validation_data = validation_generator,
-    #             validation_steps = validation_generator.samples // batch_size,
-                validation_steps = 50,
-                epochs = nb_epochs,
-                verbose=2,
-                callbacks=[reduce_lr,model_checkpoint_callback])
+# Train model
+history = model.fit_generator(
+            train_generator,
+#             steps_per_epoch = train_generator.samples // batch_size,
+            steps_per_epoch = 100,
+            validation_data = validation_generator,
+#             validation_steps = validation_generator.samples // batch_size,
+            validation_steps = 50,
+            epochs = nb_epochs,
+            verbose=2,callbacks=[reduce_lr,model_checkpoint_callback])
+            #
