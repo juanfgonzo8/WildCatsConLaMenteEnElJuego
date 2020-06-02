@@ -18,7 +18,7 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "2"
 
 from keras import backend as K
 
@@ -190,12 +190,23 @@ pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
 
 #Se muestra la matriz de confusion
-cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='true')
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1))
 fig = plt.figure(figsize = (30,20))
 sn.set(font_scale=1.4) #for label size
 sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
 fig.savefig('matriz.png')
 
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='true')
+fig = plt.figure(figsize = (30,20))
+sn.set(font_scale=1.4) #for label size
+sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
+fig.savefig('matriz_true.png')
+
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='pred')
+fig = plt.figure(figsize = (30,20))
+sn.set(font_scale=1.4) #for label size
+sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
+fig.savefig('matriz_pred.png')
 
 # #Reporte de clasificacion
 # class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
