@@ -196,7 +196,7 @@ elif args.mode == 'demo':
             im = np.asarray(Image.open(path_train+name))
         else:
             im = np.asarray(Image.open(path_train+'/'+name))
-    res = model.predict(im.numpy(),steps=200,verbose=2)
+    res = model.predict(im,steps=200,verbose=2)
     predicted = np.argmax(res, axis=1)
     print(predicted)
 else:
