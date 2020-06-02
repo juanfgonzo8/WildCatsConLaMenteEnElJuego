@@ -184,7 +184,7 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 #Se saca la matriz de confusion
 
 #Se evalua el modelo
-model.load_weights(path_pesos+'/pesos_inicial.h5')
+model.load_weights(path_pesos+'/pesos.h5')
 model.evaluate_generator(validation_generator, steps=200, verbose=2)
 pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
