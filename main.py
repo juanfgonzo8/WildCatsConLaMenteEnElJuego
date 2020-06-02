@@ -196,6 +196,7 @@ elif args.mode == 'demo':
             im = np.asarray(Image.open(path_train+name))
         else:
             im = np.asarray(Image.open(path_train+'/'+name))
+    print(validation_generator.classes)
 
     res = model.predict_on_batch(np.array([im]))
 
