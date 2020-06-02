@@ -182,7 +182,7 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 #model.fit(...)
 if args.mode == 'test':
     model.load_weights(path_pesos+'/pesos.h5')
-    ev = model.evaluate_generator(validation_generator, steps=500, verbose=2)
+    ev = model.evaluate_generator(validation_generator, steps=200, verbose=2)
     print('Loss: ' + str(ev[0]))
     print('Accuracy: ' + str(ev[1]))
     print('F1: ' + str(ev[2]))
