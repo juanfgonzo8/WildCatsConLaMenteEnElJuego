@@ -15,7 +15,7 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "2"
 
 from keras import backend as K
 
