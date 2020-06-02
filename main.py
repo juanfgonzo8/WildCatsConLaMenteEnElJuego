@@ -196,12 +196,15 @@ elif args.mode == 'demo':
             im = np.asarray(Image.open(path_train+name))
         else:
             im = np.asarray(Image.open(path_train+'/'+name))
-    print(validation_generator.class_indices)
+    print(validation_generator.class_indices )
 
     res = model.predict_on_batch(np.array([im]))
 
     predicted = np.argmax(res, axis=1)
-    print(predicted)
+    print('Resultado: '+str(predicted[0]))
+    categs = { 0:'Empty',1:'Deer',2:'Fox',3:'Coyote',4:'Racoon',5:'Skunk',6:'Bobcat',7:'Cat',8:'Dog',
+               9:'Opposum',10:'Mountain Lion',11:'Squirrel',12:'Rodent',13:'Rabbit'}
+    print('Categoria: '+str(predicted[0]))
 else:
     #Path donde se guardan los pesos
     checkpoint_filepath = path_pesos
