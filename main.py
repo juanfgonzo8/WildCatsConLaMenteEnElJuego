@@ -190,12 +190,12 @@ elif args.mode == 'demo':
     name = args.img
     model.load_weights(path_pesos + '/pesos_inicial.h5')
     if len(name) > 49:
-        im = Image.open(name)
+        im = np.asarray(Image.open(name))
     else:
         if name[0] == '/':
-            im = Image.open(path_train+name)
+            im = np.asarray(Image.open(path_train+name))
         else:
-            im = Image.open(path_train+'/'+name)
+            im = np.asarray(Image.open(path_train+'/'+name))
     res = model.predict(im.numpy(),steps=200,verbose=2)
     predicted = np.argmax(res, axis=1)
     print(predicted)
