@@ -185,8 +185,8 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 
 #Se evalua el modelo
 model.load_weights(path_pesos+'/pesos_inicial.h5')
-model.evaluate_generator(validation_generator, steps=None, verbose=2)
-pred = model.predict_generator(validation_generator,steps=None,verbose=2)
+model.evaluate_generator(validation_generator, steps=200, verbose=2)
+pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
 #Se muestra la matriz de confusion
 cm = confusion_matrix(validation_generator.classes, np.argmax(pred, axis=1))
@@ -195,7 +195,6 @@ sn.set(font_scale=1.4) #for label size
 sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
 fig.savefig('matriz.png')
 
-print(validation_generator.classes)
 
 #Reporte de clasificacion
 # class_names = []
