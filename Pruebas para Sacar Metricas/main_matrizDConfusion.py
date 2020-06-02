@@ -188,6 +188,7 @@ model.load_weights(path_pesos+'/pesos_inicial.h5')
 model.evaluate_generator(validation_generator, steps=200, verbose=2)
 pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
+print(predicted.shape)
 #Se muestra la matriz de confusion
 cm = confusion_matrix(validation_generator.classes, np.argmax(pred, axis=1))
 fig = plt.figure(figsize = (30,20))
@@ -197,5 +198,6 @@ fig.savefig('matriz.png')
 
 
 #Reporte de clasificacion
-# class_names = []
-# print(classification_report(validation_generator.classes, predicted, target_names=class_names))
+class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
+               'Squirrel','Rodent','Rabbit']
+print(classification_report(validation_generator.classes, predicted, target_names=class_names))
