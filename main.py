@@ -181,14 +181,14 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 # alongside the top Dense layers
 #model.fit(...)
 if args.mode == 'test':
-    model.load_weights(path_pesos+'/pesos_inicial.h5')
+    model.load_weights(path_pesos+'/pesos.h5')
     ev = model.evaluate_generator(validation_generator, steps=200, verbose=2)
     print('Loss: ' + str(ev[0]))
     print('Accuracy: ' + str(ev[1]))
     print('F1: ' + str(ev[2]))
 elif args.mode == 'demo':
     name = args.img
-    model.load_weights(path_pesos + '/pesos_inicial.h5')
+    model.load_weights(path_pesos + '/pesos.h5')
     if len(name) > 49:
         im = np.asarray(Image.open(name))
     else:
