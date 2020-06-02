@@ -3,6 +3,9 @@ from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
+from PIL import Image
+
+import argparse
 
 import cv2
 import pandas as pd
@@ -20,10 +23,22 @@ sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement
 
 K.tensorflow_backend._get_available_gpus()
 
+
+##
+#Se toman los argumentos de entrada
+parser = argparse.ArgumentParser(description='Codigo principal')
+parser.add_argument('--mode', type=str, default=None,
+                    help='Define si se prueba el codigo o se entrena (None, demo o test)')
+parser.add_argument('--img', type=str, default=None,
+                    help='Imagen a probar en modo demo')
+
+args = parser.parse_args()
+
 ##
 #Se establecen los paths
 path_csv = '/media/user_home2/vision2020_01/Data/iWildCam2019/train.csv'
 path_train = '/media/user_home2/vision2020_01/Data/iWildCam2019/train_images'
+path_base = '/media/user_home2/vision2020_01/Data/iWildCam2019'
 
 ##
 #Se plantan seeds
@@ -165,24 +180,39 @@ model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentro
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
 #model.fit(...)
+if args.mode == 'test':
+    model.load_weights(path_train+'/pesos.h5')
+    model.evaluate_generator(validation_generator, steps=50, verbose=2)
+elif args.mode == 'demo':
+    name = args.img
+    model.load_weights(path_base + '/pesos.h5')
+    if len(name) > 49:
+        im = Image.open(name)
+    else:
+        if name[0] == '/':
+            im = Image.open(path_train+name)
+        else:
+            im = Image.open(path_train+'/'+name)
+    res = model.predict(im.numpy())
+    print(res)
+else:
+    #Path donde se guardan los pesos
+    checkpoint_filepath = '/media/user_home2/vision2020_01/Data/iWildCam2019'
+    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        save_weights_only=True,
+        monitor='val_accuracy',
+        mode='max',
+        save_best_only=True)
 
-#Path donde se guardan los pesos
-checkpoint_filepath = '/media/user_home2/vision2020_01/Data/iWildCam2019'
-model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-    filepath=checkpoint_filepath,
-    save_weights_only=True,
-    monitor='val_accuracy',
-    mode='max',
-    save_best_only=True)
-
-# Train model
-history = model.fit_generator(
-            train_generator,
-#             steps_per_epoch = train_generator.samples // batch_size,
-            steps_per_epoch = 100,
-            validation_data = validation_generator,
-#             validation_steps = validation_generator.samples // batch_size,
-            validation_steps = 50,
-            epochs = nb_epochs,
-            verbose=2,
-            callbacks=[reduce_lr,model_checkpoint_callback])
+    # Train model
+    history = model.fit_generator(
+                train_generator,
+    #             steps_per_epoch = train_generator.samples // batch_size,
+                steps_per_epoch = 100,
+                validation_data = validation_generator,
+    #             validation_steps = validation_generator.samples // batch_size,
+                validation_steps = 50,
+                epochs = nb_epochs,
+                verbose=2,
+                callbacks=[reduce_lr,model_checkpoint_callback])
