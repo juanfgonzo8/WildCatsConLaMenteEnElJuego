@@ -47,7 +47,7 @@ path_pesos = '/media/user_home2/vision2020_01/Data/Proyectos_finales/iWildCam201
 #Se plantan seeds
 from numpy.random import seed
 seed(1)
-tf.set_random_seed(2)
+tf.random.set_seed(2)
 
 ##
 #Se crea el modelo
