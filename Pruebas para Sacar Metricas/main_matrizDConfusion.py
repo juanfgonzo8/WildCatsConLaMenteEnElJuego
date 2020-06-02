@@ -190,14 +190,14 @@ pred = model.predict_generator(validation_generator,steps=200,verbose=2)
 predicted = np.argmax(pred, axis=1)
 
 #Se muestra la matriz de confusion
-cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='all')
+cm = confusion_matrix(validation_generator.classes[0:(200*32)], np.argmax(pred, axis=1),normalize='true')
 fig = plt.figure(figsize = (30,20))
 sn.set(font_scale=1.4) #for label size
 sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
 fig.savefig('matriz.png')
 
 
-#Reporte de clasificacion
-class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
-               'Squirrel','Rodent','Rabbit']
-print(classification_report(validation_generator.classes[0:(200*32)], predicted, target_names=class_names))
+# #Reporte de clasificacion
+# class_names = ['Empty','Deer','Fox','Coyote','Racoon','Skunk','Bobcat','Cat','Dog','Opposum','Mountain Lion',
+#                'Squirrel','Rodent','Rabbit']
+# print(classification_report(validation_generator.classes[0:(200*32)], predicted, target_names=class_names))
