@@ -171,7 +171,7 @@ checkpoint_filepath = '/media/user_home2/vision2020_01/Data/iWildCam2019'
 model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     filepath=checkpoint_filepath,
     save_weights_only=True,
-    monitor='val_acc',
+    monitor='val_accuracy',
     mode='max',
     save_best_only=True)
 
