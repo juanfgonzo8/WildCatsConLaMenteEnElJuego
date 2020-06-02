@@ -4,6 +4,9 @@ from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
 from PIL import Image
+from sklearn.metrics import confusion_matrix, classification_report
+import seaborn as sn
+import matplotlib.pyplot as plt
 
 import argparse
 
@@ -177,43 +180,23 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
                               patience=5, min_lr=0.001)
 model.compile(optimizer=SGD(lr=0.01, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy',f1])
 
-# we train our model again (this time fine-tuning the top 2 inception blocks
-# alongside the top Dense layers
-#model.fit(...)
-if args.mode == 'test':
-    model.load_weights(path_pesos+'/pesos_inicial.h5')
-    model.evaluate_generator(validation_generator, steps=None, verbose=2)
-elif args.mode == 'demo':
-    name = args.img
-    model.load_weights(path_pesos + '/pesos_inicial.h5')
-    if len(name) > 49:
-        im = Image.open(name)
-    else:
-        if name[0] == '/':
-            im = Image.open(path_train+name)
-        else:
-            im = Image.open(path_train+'/'+name)
-    res = model.predict(im.numpy(),steps=None,verbose=2)
-    predicted = np.argmax(res, axis=1)
-    print(predicted)
-else:
-    #Path donde se guardan los pesos
-    checkpoint_filepath = path_pesos
-    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=checkpoint_filepath,
-        save_weights_only=True,
-        monitor='val_accuracy',
-        mode='max',
-        save_best_only=True)
+##
+#Se saca la matriz de confusion
 
-    # Train model
-    history = model.fit_generator(
-                train_generator,
-    #             steps_per_epoch = train_generator.samples // batch_size,
-                steps_per_epoch = 100,
-                validation_data = validation_generator,
-    #             validation_steps = validation_generator.samples // batch_size,
-                validation_steps = 50,
-                epochs = nb_epochs,
-                verbose=2,
-                callbacks=[reduce_lr,model_checkpoint_callback])
+#Se evalua el modelo
+model.load_weights(path_pesos+'/pesos_inicial.h5')
+model.evaluate_generator(validation_generator, steps=None, verbose=2)
+pred = model.predict_generator(validation_generator,steps=None,verbose=2)
+predicted = np.argmax(pred, axis=1)
+#Se muestra la matriz de confusion
+cm = confusion_matrix(validation_generator.classes, np.argmax(pred, axis=1))
+fig = plt.figure(figsize = (30,20))
+sn.set(font_scale=1.4) #for label size
+sn.heatmap(cm, annot=True, annot_kws={"size": 12}) # font size
+fig.savefig('matriz.png')
+
+print(validation_generator.classes)
+
+#Reporte de clasificacion
+# class_names = []
+# print(classification_report(validation_generator.classes, predicted, target_names=class_names))
